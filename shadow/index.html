@@ -1,6 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/>
+<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Montréal routing shadow-run — live scorecard</title><style>
+<title>Montréal — tableau de bord de l'acheminement</title><style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--bg:#f8f8fa;--surface:#fff;--border:#e4e4e8;--soft:#ededf1;--text:#1a1a2e;--muted:#6b6b80;--mtl-red:#C8102E;
 --accent:#4D20F5;--dim:#ede9ff;--green:#16a34a;--green-bg:#f0fdf4;--amber:#d97706;--amber-bg:#fffbeb;--mono:"SF Mono",Menlo,Consolas,monospace}
@@ -26,23 +26,24 @@ code{font-family:var(--mono);font-size:.86em;background:#f1f1f5;padding:1px 5px;
 h2{font-size:16px;margin:32px 0 10px}p{margin:10px 0;font-size:14.5px}ul{margin:8px 0 8px 20px;font-size:14px}li{margin:4px 0}
 .foot{margin-top:40px;padding-top:18px;border-top:1px solid var(--border);font-size:12.5px;color:var(--muted)}
 @media(max-width:640px){.grid{grid-template-columns:1fr}}</style></head><body><div class="wrap">
-<div class="eyebrow"><span style="color:var(--mtl-red)">&#9884;</span> Live scorecard · Montréal routing resolver · Olotalk</div>
-<h1>Routing shadow-run — a frozen policy, scored in the open</h1>
-<div class="meta">Scorecard generated <b>2026-07-21</b> · policy frozen <b>2026-07-21</b> on requests created before 2025-01-01 (2024 &amp; earlier) · every number below re-derivable from the live City API via <code>shadow-run.mjs</code></div>
+<div style="font-size:12.5px;color:var(--muted);margin-bottom:16px"><a href="scorecard.en.html">English</a> · <span style="font-weight:700;color:var(--text)">Français</span></div>
+<div class="eyebrow"><span style="color:var(--mtl-red)">&#9884;</span> Tableau de bord en direct · moteur d'acheminement de Montréal · Olotalk</div>
+<h1>Shadow-run de l'acheminement — une politique figée, notée à découvert</h1>
+<div class="meta">Tableau généré le <b>2026-07-21</b> · politique figée le <b>2026-07-21</b> sur les requêtes créées avant 2025-01-01 (2024 et avant) · chaque chiffre ci-dessous est redérivable depuis l'API en direct de la Ville via <code>shadow-run.mjs</code></div>
 <div class="hero"><div class="herofig">97.27%</div>
-<div class="herolab">of the City's routing reproduced by a <b>hash-frozen policy it was never fit on</b><br>held-out backtest · 569,918 / 585,918 requests created 2025-01-01 → 2026-07-21</div></div>
+<div class="herolab">de l'acheminement de la Ville reproduit par une <b>politique à empreinte figée qu'elle n'a jamais servi à ajuster</b><br>rétro-test hors échantillon · 569,918 / 585,918 requêtes créées 2025-01-01 → 2026-07-21</div></div>
 <div class="grid">
-<div class="card back"><div class="kl">Held-out backtest</div><div class="kv" style="color:var(--green)">97.27%</div><div class="kd">585,918 requests the frozen policy never saw</div></div>
-<div class="card live"><div class="kl">Prospective · live</div><div class="kv" style="color:var(--accent)">0</div><div class="kd">accumulating — 0 requests published since the freeze so far</div></div>
+<div class="card back"><div class="kl">Rétro-test hors échantillon</div><div class="kv" style="color:var(--green)">97.27%</div><div class="kd">585,918 requêtes que la politique figée n'a jamais vues</div></div>
+<div class="card live"><div class="kl">Prospectif · en direct</div><div class="kv" style="color:var(--accent)">0</div><div class="kd">en accumulation — 0 requête publiée depuis le gel jusqu'ici</div></div>
 </div>
-<h2>The frozen policy</h2>
-<p>A lookup table fit on <b>961,599</b> requests created before 2025-01-01 (2024 &amp; earlier) — 841 categories, 125 of them routed to a fixed shared-service unit, the rest by geography. Its sha256, minted at the freeze and unchanged since:</p>
+<h2>La politique figée</h2>
+<p>Une table de correspondance ajustée sur <b>961,599</b> requêtes créées avant 2025-01-01 (2024 et avant) — 841 catégories, dont 125 acheminées vers une unité de service partagé fixe, le reste par géographie. Son sha256, forgé au gel et inchangé depuis :</p>
 <div class="hash">b1f8107035578539f3c3a9f81e2ec1d9365ec038ed409ab8fc1bf96ea915a1f1</div>
-<div class="callout"><span class="lbl">Why you can trust this number without trusting us</span>
-A prediction is a deterministic function of this frozen table and a request's category + geographic territory — nothing else. There are no model weights, no free parameters, nothing hidden. Recompute any prediction yourself from the same public inputs and you get the same answer. The table was hashed before the tested requests existed, so it cannot have been fit to them. Each daily run is committed to git; the commit history is the proof-of-time.</div>
-<div class="callout warn"><span class="lbl">What this scorecard does not claim</span>
-It does <b>not</b> claim to predict a routing before the City makes it — the 311 open data publishes each request already routed. The claim is narrower and checkable: a provably-not-retrofitted policy, independently recomputable, that keeps reproducing the City's own routing on requests it never saw. It scores the routing resolver only, not photo/voice perception.</div>
-<h2>Reproduce it</h2>
-<p><code>node shadow/shadow-run.mjs --as-of 2026-07-21</code> — pulls the live City API, re-derives every figure, and fails loudly if the committed policy hash no longer matches its own rules.</p>
-<div class="foot">Source: Requêtes 311 (donnees.montreal.ca, CC-BY 4.0). Ledger: <code>shadow/predictions/</code>. This page is regenerated from <code>scorecard.json</code> on every run — do not hand-edit.</div>
+<div class="callout"><span class="lbl">Pourquoi vous pouvez croire ce chiffre sans nous croire</span>
+Une prédiction est une fonction déterministe de cette table figée et de la catégorie + du territoire géographique d'une requête — rien d'autre. Aucun poids de modèle, aucun paramètre libre, rien de caché. Recalculez n'importe quelle prédiction vous-même à partir des mêmes entrées publiques et vous obtenez le même résultat. La table a été hachée avant l'existence des requêtes testées; elle ne peut donc pas y avoir été ajustée. Chaque exécution quotidienne est consignée dans git; l'historique des commits est la preuve d'antériorité.</div>
+<div class="callout warn"><span class="lbl">Ce que ce tableau ne prétend pas</span>
+Il ne prétend <b>pas</b> prédire un acheminement avant que la Ville ne le fasse — les données ouvertes 311 publient chaque requête déjà acheminée. La revendication est plus étroite et vérifiable : une politique non ajustée après coup, recalculable de façon indépendante, qui continue de reproduire l'acheminement de la Ville sur des requêtes qu'elle n'a jamais vues. Elle note uniquement le moteur d'acheminement, pas la perception photo/voix.</div>
+<h2>Reproduisez-le</h2>
+<p><code>node scripts/research/montreal-shadow/shadow-run.mjs --as-of 2026-07-21</code> — interroge l'API en direct de la Ville, redérive chaque chiffre, et échoue bruyamment si l'empreinte de la politique consignée ne correspond plus à ses règles.</p>
+<div class="foot">Source : Requêtes 311 (donnees.montreal.ca, CC-BY 4.0). Journal : <code>scripts/research/montreal-shadow/predictions/</code>. Cette page est régénérée à partir de <code>scorecard.json</code> à chaque exécution — ne pas modifier à la main.</div>
 </div></body></html>

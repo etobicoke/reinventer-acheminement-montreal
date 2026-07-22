@@ -23,6 +23,6 @@ jobs:
         run: |
           git config user.name "shadow-run[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add shadow/predictions shadow/scorecard.json shadow/scorecard.html shadow/index.html shadow/policy.json
+          git add shadow/predictions shadow/scorecard.json shadow/scorecard.html shadow/scorecard.en.html shadow/index.html shadow/policy.json
           if git diff --cached --quiet; then echo "No change today."; else
             git commit -m "chore(shadow): routing ledger $(date -u +%F)"; git push; fi

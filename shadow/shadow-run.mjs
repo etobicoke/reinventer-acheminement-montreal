@@ -50,6 +50,7 @@ const LEDGER_DIR = join(HERE, "predictions");
 const POLICY_PATH = join(HERE, "policy.json");
 const SCORECARD_JSON = join(HERE, "scorecard.json");
 const SCORECARD_HTML = join(HERE, "scorecard.html");
+const SCORECARD_EN_HTML = join(HERE, "scorecard.en.html");
 
 const API = "https://donnees.montreal.ca/api/3/action";
 const R311 = "2cfa0e06-9be4-49a6-b7f1-ee9f2363a872"; // Requêtes 311, 2022 → present
@@ -218,15 +219,19 @@ async function scoreWindow(saved, dateWhere, label, keepCells = false) {
 
 const pct = (x) => (x == null ? "—" : `${(x * 100).toFixed(2)}%`);
 
-function renderHtml(card) {
+function renderHtml(card, lang) {
   const prosp = card.tiers.prospective;
   const back = card.tiers.heldOut;
+  const fr = lang === "fr";
   const prospLine = prosp.evaluated
-    ? `${pct(prosp.accuracy)} · ${prosp.correct.toLocaleString()} / ${prosp.evaluated.toLocaleString()} requests`
-    : `accumulating — 0 requests published since the freeze so far`;
-  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/>
+    ? `${pct(prosp.accuracy)} · ${prosp.correct.toLocaleString()} / ${prosp.evaluated.toLocaleString()} ${fr ? "requêtes" : "requests"}`
+    : (fr ? "en accumulation — 0 requête publiée depuis le gel jusqu'ici" : "accumulating — 0 requests published since the freeze so far");
+  const toggle = fr
+    ? `<a href="scorecard.en.html">English</a> · <span style="font-weight:700;color:var(--text)">Français</span>`
+    : `<span style="font-weight:700;color:var(--text)">English</span> · <a href="scorecard.html">Français</a>`;
+  return `<!DOCTYPE html><html lang="${lang}"><head><meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Montréal routing shadow-run — live scorecard</title><style>
+<title>${fr ? "Montréal — tableau de bord de l'acheminement" : "Montréal routing shadow-run — live scorecard"}</title><style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--bg:#f8f8fa;--surface:#fff;--border:#e4e4e8;--soft:#ededf1;--text:#1a1a2e;--muted:#6b6b80;--mtl-red:#C8102E;
 --accent:#4D20F5;--dim:#ede9ff;--green:#16a34a;--green-bg:#f0fdf4;--amber:#d97706;--amber-bg:#fffbeb;--mono:"SF Mono",Menlo,Consolas,monospace}
@@ -252,25 +257,26 @@ code{font-family:var(--mono);font-size:.86em;background:#f1f1f5;padding:1px 5px;
 h2{font-size:16px;margin:32px 0 10px}p{margin:10px 0;font-size:14.5px}ul{margin:8px 0 8px 20px;font-size:14px}li{margin:4px 0}
 .foot{margin-top:40px;padding-top:18px;border-top:1px solid var(--border);font-size:12.5px;color:var(--muted)}
 @media(max-width:640px){.grid{grid-template-columns:1fr}}</style></head><body><div class="wrap">
-<div class="eyebrow"><span style="color:var(--mtl-red)">&#9884;</span> Live scorecard · Montréal routing resolver · Olotalk</div>
-<h1>Routing shadow-run — a frozen policy, scored in the open</h1>
-<div class="meta">Scorecard generated <b>${card.asOf}</b> · policy frozen <b>${card.frozenAt}</b> on requests created before ${card.freezeCutoff} (2024 &amp; earlier) · every number below re-derivable from the live City API via <code>shadow-run.mjs</code></div>
+<div style="font-size:12.5px;color:var(--muted);margin-bottom:16px">${toggle}</div>
+<div class="eyebrow"><span style="color:var(--mtl-red)">&#9884;</span> ${fr ? "Tableau de bord en direct · moteur d'acheminement de Montréal · Olotalk" : "Live scorecard · Montréal routing resolver · Olotalk"}</div>
+<h1>${fr ? "Shadow-run de l'acheminement — une politique figée, notée à découvert" : "Routing shadow-run — a frozen policy, scored in the open"}</h1>
+<div class="meta">${fr ? `Tableau généré le <b>${card.asOf}</b> · politique figée le <b>${card.frozenAt}</b> sur les requêtes créées avant ${card.freezeCutoff} (2024 et avant) · chaque chiffre ci-dessous est redérivable depuis l'API en direct de la Ville via <code>shadow-run.mjs</code>` : `Scorecard generated <b>${card.asOf}</b> · policy frozen <b>${card.frozenAt}</b> on requests created before ${card.freezeCutoff} (2024 &amp; earlier) · every number below re-derivable from the live City API via <code>shadow-run.mjs</code>`}</div>
 <div class="hero"><div class="herofig">${pct(back.accuracy)}</div>
-<div class="herolab">of the City's routing reproduced by a <b>hash-frozen policy it was never fit on</b><br>held-out backtest · ${back.correct.toLocaleString()} / ${back.evaluated.toLocaleString()} requests created ${card.freezeCutoff} → ${card.prospectiveEpoch}</div></div>
+<div class="herolab">${fr ? `de l'acheminement de la Ville reproduit par une <b>politique à empreinte figée qu'elle n'a jamais servi à ajuster</b><br>rétro-test hors échantillon · ${back.correct.toLocaleString()} / ${back.evaluated.toLocaleString()} requêtes créées ${card.freezeCutoff} → ${card.prospectiveEpoch}` : `of the City's routing reproduced by a <b>hash-frozen policy it was never fit on</b><br>held-out backtest · ${back.correct.toLocaleString()} / ${back.evaluated.toLocaleString()} requests created ${card.freezeCutoff} → ${card.prospectiveEpoch}`}</div></div>
 <div class="grid">
-<div class="card back"><div class="kl">Held-out backtest</div><div class="kv" style="color:var(--green)">${pct(back.accuracy)}</div><div class="kd">${back.evaluated.toLocaleString()} requests the frozen policy never saw</div></div>
-<div class="card live"><div class="kl">Prospective · live</div><div class="kv" style="color:var(--accent)">${prosp.evaluated ? pct(prosp.accuracy) : "0"}</div><div class="kd">${prospLine}</div></div>
+<div class="card back"><div class="kl">${fr ? "Rétro-test hors échantillon" : "Held-out backtest"}</div><div class="kv" style="color:var(--green)">${pct(back.accuracy)}</div><div class="kd">${fr ? `${back.evaluated.toLocaleString()} requêtes que la politique figée n'a jamais vues` : `${back.evaluated.toLocaleString()} requests the frozen policy never saw`}</div></div>
+<div class="card live"><div class="kl">${fr ? "Prospectif · en direct" : "Prospective · live"}</div><div class="kv" style="color:var(--accent)">${prosp.evaluated ? pct(prosp.accuracy) : "0"}</div><div class="kd">${prospLine}</div></div>
 </div>
-<h2>The frozen policy</h2>
-<p>A lookup table fit on <b>${card.trainRows.toLocaleString()}</b> requests created before ${card.freezeCutoff} (2024 &amp; earlier) — ${card.categoryCount} categories, ${card.fixedCount} of them routed to a fixed shared-service unit, the rest by geography. Its sha256, minted at the freeze and unchanged since:</p>
+<h2>${fr ? "La politique figée" : "The frozen policy"}</h2>
+<p>${fr ? `Une table de correspondance ajustée sur <b>${card.trainRows.toLocaleString()}</b> requêtes créées avant ${card.freezeCutoff} (2024 et avant) — ${card.categoryCount} catégories, dont ${card.fixedCount} acheminées vers une unité de service partagé fixe, le reste par géographie. Son sha256, forgé au gel et inchangé depuis :` : `A lookup table fit on <b>${card.trainRows.toLocaleString()}</b> requests created before ${card.freezeCutoff} (2024 &amp; earlier) — ${card.categoryCount} categories, ${card.fixedCount} of them routed to a fixed shared-service unit, the rest by geography. Its sha256, minted at the freeze and unchanged since:`}</p>
 <div class="hash">${card.policyHash}</div>
-<div class="callout"><span class="lbl">Why you can trust this number without trusting us</span>
-A prediction is a deterministic function of this frozen table and a request's category + geographic territory — nothing else. There are no model weights, no free parameters, nothing hidden. Recompute any prediction yourself from the same public inputs and you get the same answer. The table was hashed before the tested requests existed, so it cannot have been fit to them. Each daily run is committed to git; the commit history is the proof-of-time.</div>
-<div class="callout warn"><span class="lbl">What this scorecard does not claim</span>
-It does <b>not</b> claim to predict a routing before the City makes it — the 311 open data publishes each request already routed. The claim is narrower and checkable: a provably-not-retrofitted policy, independently recomputable, that keeps reproducing the City's own routing on requests it never saw. It scores the routing resolver only, not photo/voice perception.</div>
-<h2>Reproduce it</h2>
-<p><code>node scripts/research/montreal-shadow/shadow-run.mjs --as-of ${card.asOf}</code> — pulls the live City API, re-derives every figure, and fails loudly if the committed policy hash no longer matches its own rules.</p>
-<div class="foot">Source: Requêtes 311 (donnees.montreal.ca, CC-BY 4.0). Ledger: <code>scripts/research/montreal-shadow/predictions/</code>. This page is regenerated from <code>scorecard.json</code> on every run — do not hand-edit.</div>
+<div class="callout"><span class="lbl">${fr ? "Pourquoi vous pouvez croire ce chiffre sans nous croire" : "Why you can trust this number without trusting us"}</span>
+${fr ? "Une prédiction est une fonction déterministe de cette table figée et de la catégorie + du territoire géographique d'une requête — rien d'autre. Aucun poids de modèle, aucun paramètre libre, rien de caché. Recalculez n'importe quelle prédiction vous-même à partir des mêmes entrées publiques et vous obtenez le même résultat. La table a été hachée avant l'existence des requêtes testées; elle ne peut donc pas y avoir été ajustée. Chaque exécution quotidienne est consignée dans git; l'historique des commits est la preuve d'antériorité." : "A prediction is a deterministic function of this frozen table and a request's category + geographic territory — nothing else. There are no model weights, no free parameters, nothing hidden. Recompute any prediction yourself from the same public inputs and you get the same answer. The table was hashed before the tested requests existed, so it cannot have been fit to them. Each daily run is committed to git; the commit history is the proof-of-time."}</div>
+<div class="callout warn"><span class="lbl">${fr ? "Ce que ce tableau ne prétend pas" : "What this scorecard does not claim"}</span>
+${fr ? "Il ne prétend <b>pas</b> prédire un acheminement avant que la Ville ne le fasse — les données ouvertes 311 publient chaque requête déjà acheminée. La revendication est plus étroite et vérifiable : une politique non ajustée après coup, recalculable de façon indépendante, qui continue de reproduire l'acheminement de la Ville sur des requêtes qu'elle n'a jamais vues. Elle note uniquement le moteur d'acheminement, pas la perception photo/voix." : "It does <b>not</b> claim to predict a routing before the City makes it — the 311 open data publishes each request already routed. The claim is narrower and checkable: a provably-not-retrofitted policy, independently recomputable, that keeps reproducing the City's own routing on requests it never saw. It scores the routing resolver only, not photo/voice perception."}</div>
+<h2>${fr ? "Reproduisez-le" : "Reproduce it"}</h2>
+<p>${fr ? `<code>node scripts/research/montreal-shadow/shadow-run.mjs --as-of ${card.asOf}</code> — interroge l'API en direct de la Ville, redérive chaque chiffre, et échoue bruyamment si l'empreinte de la politique consignée ne correspond plus à ses règles.` : `<code>node scripts/research/montreal-shadow/shadow-run.mjs --as-of ${card.asOf}</code> — pulls the live City API, re-derives every figure, and fails loudly if the committed policy hash no longer matches its own rules.`}</p>
+<div class="foot">${fr ? "Source : Requêtes 311 (donnees.montreal.ca, CC-BY 4.0). Journal : <code>scripts/research/montreal-shadow/predictions/</code>. Cette page est régénérée à partir de <code>scorecard.json</code> à chaque exécution — ne pas modifier à la main." : "Source: Requêtes 311 (donnees.montreal.ca, CC-BY 4.0). Ledger: <code>scripts/research/montreal-shadow/predictions/</code>. This page is regenerated from <code>scorecard.json</code> on every run — do not hand-edit."}</div>
 </div></body></html>\n`;
 }
 
@@ -327,14 +333,16 @@ It does <b>not</b> claim to predict a routing before the City makes it — the 3
     },
   };
   writeFileSync(SCORECARD_JSON, JSON.stringify(card, null, 2) + "\n");
-  const html = renderHtml(card);
-  writeFileSync(SCORECARD_HTML, html);
-  writeFileSync(join(HERE, "index.html"), html); // GitHub Pages serves this at the repo root
+  const htmlFr = renderHtml(card, "fr");
+  const htmlEn = renderHtml(card, "en");
+  writeFileSync(SCORECARD_HTML, htmlFr); // French is the primary scorecard (Montréal)
+  writeFileSync(SCORECARD_EN_HTML, htmlEn);
+  writeFileSync(join(HERE, "index.html"), htmlFr); // GitHub Pages serves this at the repo root
 
   console.log(`\n  policy hash        ${saved.policyHash}`);
   console.log(`  held-out backtest  \x1b[32m${pct(heldOut.accuracy)}\x1b[0m  (${heldOut.correct.toLocaleString()} / ${heldOut.evaluated.toLocaleString()})`);
   console.log(`  prospective live   ${prospective.evaluated ? `\x1b[36m${pct(prospective.accuracy)}\x1b[0m  (${prospective.correct.toLocaleString()} / ${prospective.evaluated.toLocaleString()})` : "\x1b[2m0 requests published since freeze — accumulates daily\x1b[0m"}`);
-  console.log(`\n  wrote  predictions/${AS_OF}.json · scorecard.json · scorecard.html · index.html`);
+  console.log(`\n  wrote  predictions/${AS_OF}.json · scorecard.json · scorecard.html (fr) · scorecard.en.html · index.html`);
   console.log(`  \x1b[2mcommit these now — the git timestamp is the ledger's proof-of-time.\x1b[0m\n`);
 })().catch((e) => {
   console.error(`\n\x1b[31mSHADOW-RUN ERROR\x1b[0m ${e.message}`);
