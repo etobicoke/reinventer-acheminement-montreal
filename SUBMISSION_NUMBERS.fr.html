@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Chiffres de la soumission — la référence canonique</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--mtl-red:#C8102E;--bg:#f8f8fa;--surface:#fff;--border:#e4e4e8;--soft:#ededf1;--text:#1a1a2e;--muted:#6b6b80;
+--accent:#4D20F5;--dim:#ede9ff;--green:#16a34a;--green-bg:#f0fdf4;--green-bd:#bbf7d0;
+--red:#dc2626;--red-bg:#fef2f2;--red-bd:#fecaca;--amber:#d97706;--amber-bg:#fffbeb;--amber-bd:#fde68a;
+--radius:10px;--radius-sm:6px;--shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.04);--mono:"SF Mono","JetBrains Mono",Menlo,Consolas,monospace}
+html{font-size:16px}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+.wrap{max-width:940px;margin:0 auto;padding:52px 28px 96px}
+.back{display:inline-block;margin-bottom:18px;font-size:13px;color:var(--accent);text-decoration:none}
+header.doc{border-bottom:1px solid var(--border);padding-bottom:24px;margin-bottom:30px}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+h1{font-size:28px;line-height:1.2;margin:10px 0 12px;letter-spacing:-.02em}
+.meta{font-size:13px;color:var(--muted)}.meta b{color:var(--text)}
+h2{font-size:19px;margin:42px 0 12px;letter-spacing:-.01em}
+h3{font-size:14px;margin:22px 0 8px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+p{margin:11px 0}a{color:var(--accent)}
+code{font-family:var(--mono);font-size:.85em;background:#f1f1f5;padding:1px 5px;border-radius:4px}
+pre{background:#1a1a2e;color:#e6e6f0;padding:14px 16px;border-radius:var(--radius);overflow-x:auto;font-family:var(--mono);font-size:12px;line-height:1.5;margin:12px 0}
+ul{margin:8px 0 8px 22px}li{margin:5px 0}
+.rule{border:1px solid var(--border);border-left-width:4px;border-left-color:var(--accent);background:var(--dim);border-radius:var(--radius-sm);padding:16px 20px;margin:18px 0}
+.rule .big{font-size:18px;font-weight:700;letter-spacing:-.01em;color:var(--accent)}
+.callout{border:1px solid var(--border);border-left-width:4px;border-radius:var(--radius-sm);padding:13px 16px;margin:16px 0;font-size:14px}
+.c-warn{border-left-color:var(--amber);background:var(--amber-bg)}
+.c-bad{border-left-color:var(--red);background:var(--red-bg)}
+.c-good{border-left-color:var(--green);background:var(--green-bg)}
+.callout .lbl{font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:4px}
+.c-warn .lbl{color:var(--amber)}.c-bad .lbl{color:var(--red)}.c-good .lbl{color:var(--green)}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--soft);vertical-align:top}
+th{font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);border-bottom:1px solid var(--border)}
+td .find{font-family:var(--mono);font-size:12px;color:var(--red);background:var(--red-bg);padding:1px 6px;border-radius:4px}
+td .rep{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--green);background:var(--green-bg);padding:1px 6px;border-radius:4px}
+td .keep{font-family:var(--mono);font-size:12px;color:var(--green);font-weight:700}
+tr.keeprow{background:#fafffb}
+.foot{margin-top:44px;padding-top:20px;border-top:1px solid var(--border);font-size:12.5px;color:var(--muted)}
+@media(max-width:640px){table{font-size:12px}th,td{padding:6px 8px}}
+body{border-top:3px solid var(--mtl-red)}</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="index.html">← Pôle de soumission (Montréal)</a>
+<div style="font-size:12.5px;color:var(--muted);margin:-6px 0 16px"><a href="SUBMISSION_NUMBERS.html">English</a> · <span style="font-weight:700;color:var(--text)">Français</span></div>
+<header class="doc">
+<div class="eyebrow"><span style="color:var(--mtl-red)">&#9884;</span> Référence canonique · à consulter avant de coller quoi que ce soit dans le formulaire</div>
+<h1>Chiffres de la soumission</h1>
+<div class="meta">Une seule source de vérité pour chaque chiffre de la soumission à Montréal. Revérifié par rapport à l'API en direct de la Ville le <b>2026-07-21</b>. Reproduire : <code>node shadow/montreal-challenge-verify.mjs</code>.</div>
+</header>
+
+<div class="rule">
+<div class="big">Citez les taux exactement. Arrondissez chaque compte.</div>
+<p style="margin:8px 0 0;font-size:14px">Le jeu de données 311 croît chaque jour. Les taux (exactitude, parts) sont stables à une fraction de point près ; les comptes bruts dérivent vers le haut. Un juré qui relance en septembre obtient <b>des comptes plus élevés et des taux quasi identiques</b>. Citez un compte brut et il ne concordera pas avec le sien — ça passe pour une erreur. Arrondissez-le, citez les taux exactement, et tout ce qu'il voit vous confirme. Le vérificateur signale les comptes croissants comme <b>DRIFT, non FAIL</b>, précisément pour cette raison.</p>
+</div>
+
+<h2>Utilisez ces formulations</h2>
+<table>
+<thead><tr><th>Dites ceci (à l'épreuve de la dérive)</th><th>Exact aujourd'hui</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td><b>~97%</b> de l'acheminement reproduit sans apprentissage automatique</td><td>97.27% hors échantillon</td><td>Règle B (géométrie + une bascule par catégorie). Exact sans risque — c'est un taux.</td></tr>
+<tr><td><b>~90%</b> par la seule géométrie</td><td>90.99% hors échantillon</td><td>Règle A. Un taux — exact sans risque.</td></tr>
+<tr><td><b>« 3 million+ requêtes »</b></td><td>3,066,063</td><td><b>Ne jamais citer le nombre brut</b> — arrondissez-le.</td></tr>
+<tr><td><b>~82%</b> arrivent encore par téléphone</td><td>81.98%</td><td>S'arrondit à 82.</td></tr>
+<tr><td><b>~1.5 million</b> de requêtes localisées évaluées</td><td>1,547,517</td><td>Arrondissez-le.</td></tr>
+<tr><td><b>~500</b> catégories de service actives</td><td>522 en 2026</td><td>~994 depuis le début, dont 279 retirées.</td></tr>
+<tr><td><b>~75%</b> des signalements → un arrondissement</td><td>74.71% → Rosemont</td><td>Le piège du service partagé. Taux — sans risque.</td></tr>
+</tbody>
+</table>
+
+<h2>Rechercher-remplacer pour les cinq documents</h2>
+<p>Cherchez dans chaque document (fiche technique · contrats · blocs du formulaire · note de service · réponses du formulaire) la chaîne en rouge ; remplacez-la par celle en vert. Ignorez tout ce qui est absent.</p>
+
+<h3>A · Adopter partout les taux hors échantillon</h3>
+<p style="font-size:13.5px">Ils correspondent à la fiche de pointage en direct, donc la note de service et la fiche de pointage concordent — et un taux hors échantillon constitue un argument plus solide qu'un taux en échantillon.</p>
+<table>
+<thead><tr><th>Rechercher</th><th>Remplacer</th><th>Pourquoi</th></tr></thead>
+<tbody>
+<tr><td><span class="find">97.55%</span></td><td><span class="rep">97.27%</span> hors échantillon</td><td>97.55 est en échantillon ; mettez de l'avant le hors échantillon</td></tr>
+<tr><td><span class="find">90.33%</span></td><td><span class="rep">90.99%</span> hors échantillon</td><td>idem</td></tr>
+<tr><td><span class="find">90.95%</span></td><td><span class="rep">90.99%</span></td><td>dérive sur la Règle A hors échantillon</td></tr>
+<tr><td><span class="find">96.46%</span></td><td><span class="rep">90.99%</span> / <span class="rep">97.27%</span></td><td>ancien chiffre limité aux nids-de-poule → utilisez les chiffres hors échantillon sur l'ensemble complet des données</td></tr>
+<tr class="keeprow"><td><span class="keep">97.27%</span></td><td><span class="keep">conserver ✓</span></td><td>Règle B hors échantillon — inchangé</td></tr>
+</tbody>
+</table>
+
+<h3>B · Arrondir chaque compte brut</h3>
+<table>
+<thead><tr><th>Rechercher</th><th>Remplacer</th></tr></thead>
+<tbody>
+<tr><td><span class="find">3,034,731</span> · <span class="find">3.03M</span></td><td><span class="rep">3 million+</span></td></tr>
+<tr><td><span class="find">1,529,458</span></td><td><span class="rep">~1.5 million</span></td></tr>
+<tr><td><span class="find">567,859</span></td><td><span class="rep">~585,000</span> (ensemble hors échantillon)</td></tr>
+<tr><td><span class="find">2,489,180</span></td><td><span class="rep">~2.5 million</span> (téléphone)</td></tr>
+<tr><td><span class="find">62,008</span></td><td><span class="rep">~62,000</span></td></tr>
+<tr><td><span class="find">47,578</span></td><td><span class="rep">~48,000</span> (Organisme divers)</td></tr>
+<tr><td><span class="find">961,599</span> · <span class="find">961,216</span></td><td><span class="rep">~960,000</span> (ensemble d'entraînement)</td></tr>
+<tr><td><span class="find">993</span> · <span class="find">994</span></td><td><span class="rep">nearly 1,000</span> (catégories depuis le début)</td></tr>
+<tr><td><span class="find">513</span></td><td><span class="rep">~500</span> (actives en 2026)</td></tr>
+<tr><td><span class="find">252</span></td><td><span class="rep">~275</span> (retirées)</td></tr>
+<tr><td><span class="find">311</span> (nids-de-poule liés à la ville)</td><td><span class="rep">~300</span></td></tr>
+<tr><td><span class="find">82.02%</span></td><td><span class="rep">~82%</span></td></tr>
+<tr><td><span class="find">74.70%</span></td><td><span class="rep">~75%</span></td></tr>
+<tr><td><span class="find">66.90%</span></td><td><span class="rep">~67%</span></td></tr>
+</tbody>
+</table>
+
+<h3>C · Garder ces valeurs exactes — elles ne dérivent pas</h3>
+<div class="callout c-good"><span class="lbl">Instantané voirie 2020 figé / structurel</span>
+<span class="keep">16,750</span> actifs de voirie · <span class="keep">121 / 68 / 60</span> attributions autoroute→arrondissement · <span class="keep">7</span> lignes d'actifs de tiers · <span class="keep">19</span> unités par catégorie de nid-de-poule · <span class="keep">0.69%</span> de divergence entre arrondissements · <span class="keep">2020-05-30</span> date de l'instantané.</div>
+
+<h3>D · Hygiène du dénominateur — une vérification, pas une substitution</h3>
+<div class="callout c-warn"><span class="lbl">Ne jamais associer le 97% au 3M</span>
+Le 97% porte sur les <b>~585,000 hors échantillon</b> (et ~1.5M évalués en échantillon). Ne confondez pas les trois : <b>3M parcourus · ~1.5M évalués · ~585K hors échantillon.</b></div>
+
+<h3>E · Pièges de langage — rechercher et supprimer</h3>
+<div class="callout c-bad"><span class="lbl">Ceux-ci coulent la soumission devant le jury</span>
+<ul style="margin:4px 0 0">
+<li>Tout « prédire <b>avant</b> que la Ville décide/agisse » → les données ouvertes livrent chaque requête déjà acheminée. Dites « non rétro-ajusté de façon démontrable + recalculable de façon indépendante ».</li>
+<li>Toute affirmation selon laquelle <code>PROPRIETAIRE_REF</code> <b>donne</b> le propriétaire → c'est une étiquette de territoire ; la compétence est <b>réconciliée</b> entre les sources.</li>
+</ul></div>
+
+<h3>F · L'empreinte de la politique, si citée</h3>
+<pre>b1f8107035578539f3c3a9f81e2ec1d9365ec038ed409ab8fc1bf96ea915a1f1</pre>
+
+<h2>Revérifiez avant de soumettre</h2>
+<pre>node shadow/montreal-challenge-verify.mjs   # every figure, PASS/DRIFT/FAIL
+node shadow/shadow-run.mjs  # the live scorecard</pre>
+<p>Lancez les deux le matin de la soumission. Attendez-vous à <b>0 FAIL</b> et à du <b>DRIFT</b> sur les comptes (normal). Si un <em>taux</em> varie de plus de ~0.5pp, arrêtez et enquêtez avant de le citer.</p>
+
+<div class="foot">
+Complément de <a href="proposal.fr.html">proposal.html</a> &amp; <a href="findings.fr.html">findings.html</a>. Source Markdown : <code>SUBMISSION_NUMBERS.md</code>. Données : Requêtes 311 (donnees.montreal.ca, CC-BY 4.0 · © Ville de Montréal).
+</div>
+</div>
+</body>
+</html>

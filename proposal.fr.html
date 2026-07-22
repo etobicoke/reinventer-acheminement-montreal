@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Olotalk — Défi IA : réinventer l'expérience citoyenne (Ville de Montréal)</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f8f8fa; --surface: #ffffff; --border: #e4e4e8; --border-soft: #ededf1;
+      --text: #1a1a2e; --muted: #6b6b80; --accent: #4D20F5; --accent-dim: #ede9ff;
+      --green: #16a34a; --green-bg: #f0fdf4; --green-bd: #bbf7d0;
+      --red: #dc2626; --red-bg: #fef2f2; --red-bd: #fecaca;
+      --amber: #d97706; --amber-bg: #fffbeb; --amber-bd: #fde68a;
+      --blue: #2563eb; --blue-bg: #eff6ff; --blue-bd: #bfdbfe;
+      --radius: 10px; --radius-sm: 6px; --mtl-red: #C8102E;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
+      --mono: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+    }
+    html { font-size: 16px; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", Helvetica, Arial, sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.62; }
+    .wrap { max-width: 980px; margin: 0 auto; padding: 56px 28px 96px; }
+    header.doc { border-bottom: 1px solid var(--border); padding-bottom: 28px; margin-bottom: 36px; }
+    .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--accent); }
+    h1 { font-size: 30px; line-height: 1.2; margin: 10px 0 12px; letter-spacing: -.02em; }
+    .meta { font-size: 13px; color: var(--muted); }
+    .meta b { color: var(--text); }
+    h2 { font-size: 20px; margin: 48px 0 14px; letter-spacing: -.01em; padding-top: 6px; }
+    h2 .n { font-family: var(--mono); font-size: 14px; color: var(--accent); margin-right: 8px; }
+    h3 { font-size: 15px; margin: 24px 0 8px; }
+    p { margin: 12px 0; }
+    code { font-family: var(--mono); font-size: .86em; background: #f1f1f5; padding: 1px 5px; border-radius: 4px; }
+    pre { background: #1a1a2e; color: #e6e6f0; padding: 16px 18px; border-radius: var(--radius); overflow-x: auto; font-family: var(--mono); font-size: 12.5px; line-height: 1.55; margin: 14px 0; }
+    ul, ol { margin: 10px 0 10px 22px; } li { margin: 5px 0; }
+    a { color: var(--accent); }
+    blockquote { border-left: 3px solid var(--border); padding-left: 16px; margin: 14px 0; color: var(--muted); font-style: italic; }
+    .callout { border: 1px solid var(--border); border-left-width: 4px; border-radius: var(--radius-sm); padding: 14px 18px; margin: 18px 0; font-size: 14.5px; background: var(--surface); }
+    .callout .lbl { font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: .07em; display: block; margin-bottom: 4px; }
+    .c-find { border-left-color: var(--accent); background: var(--accent-dim); } .c-find .lbl { color: var(--accent); }
+    .c-warn { border-left-color: var(--amber); background: var(--amber-bg); } .c-warn .lbl { color: var(--amber); }
+    .c-good { border-left-color: var(--green); background: var(--green-bg); } .c-good .lbl { color: var(--green); }
+    .c-bad  { border-left-color: var(--red); background: var(--red-bg); } .c-bad .lbl { color: var(--red); }
+    table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 13.5px; }
+    th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--border-soft); vertical-align: top; }
+    th { font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); border-bottom: 1px solid var(--border); }
+    td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+    .tag { display: inline-block; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 4px; white-space: nowrap; }
+    .t-have { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-bd); }
+    .t-part { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-bd); }
+    .t-gap  { background: var(--red-bg); color: var(--red); border: 1px solid var(--red-bd); }
+    .t-new  { background: var(--accent-dim); color: var(--accent); border: 1px solid #ddd6fe; }
+    .chart { border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); box-shadow: var(--shadow); padding: 18px 20px; margin: 20px 0; }
+    .chart h4 { font-size: 15px; margin: 0 0 3px; letter-spacing: -.01em; color: var(--text); }
+    .chart .csub { font-size: 12.5px; color: var(--muted); margin: 0 0 14px; }
+    .chart figcaption { font-size: 13px; color: var(--muted); margin-top: 12px; line-height: 1.5; }
+    .chart figcaption b { color: var(--text); }
+    .foot { margin-top: 52px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); }
+    .hero { font-size: 18px; line-height: 1.5; font-weight: 600; letter-spacing: -.01em; margin: 6px 0; }
+
+    /* three-card verdict */
+    .verdict { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 18px 0; }
+    .vcard { border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); padding: 14px 16px; box-shadow: var(--shadow); }
+    .vcard .vh { font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 6px; }
+    .vcard.yes { border-top: 3px solid var(--green); } .vcard.yes .vh { color: var(--green); }
+    .vcard.crux { border-top: 3px solid var(--red); } .vcard.crux .vh { color: var(--red); }
+    .vcard.path { border-top: 3px solid var(--accent); } .vcard.path .vh { color: var(--accent); }
+    .vcard p { font-size: 12.5px; margin: 4px 0; }
+
+    /* HERO FIGURE — exactly one per document */
+    .heroblock { border: 1px solid var(--border); border-radius: 14px; background: linear-gradient(180deg,#fdfdff,#f5f5fa); box-shadow: var(--shadow); padding: 26px 24px; margin: 22px 0; text-align: center; }
+    .herofig { font-size: 60px; font-weight: 700; letter-spacing: -.035em; line-height: 1; color: var(--accent); }
+    .herolab { font-size: 13.5px; color: var(--muted); margin-top: 10px; }
+    .herolab b { color: var(--text); }
+    .herosub { font-size: 12px; color: var(--muted); margin-top: 4px; font-family: var(--mono); }
+
+    /* KPI row of stat tiles */
+    .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 16px 0 4px; }
+    .kpi { border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); padding: 13px 14px; box-shadow: var(--shadow); }
+    .kpi .kl { font-size: 11px; color: var(--muted); line-height: 1.35; }
+    .kpi .kv { font-size: 25px; font-weight: 700; letter-spacing: -.02em; margin-top: 5px; line-height: 1.1; }
+    .kpi .kd { font-size: 11px; color: var(--muted); margin-top: 3px; }
+    .kpi.pos .kv { color: var(--green); }
+
+    /* meter — a single ratio against a limit */
+    .meter { margin: 16px 0; }
+    .meter .mrow { display: flex; align-items: baseline; gap: 10px; margin-bottom: 6px; }
+    .meter .mname { font-size: 13.5px; font-weight: 600; }
+    .meter .mval { margin-left: auto; font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 13px; font-weight: 700; color: var(--accent); }
+    .meter .track { height: 12px; border-radius: 6px; background: var(--accent-dim); overflow: hidden; }
+    .meter .fill { height: 100%; border-radius: 6px; background: var(--accent); }
+    .meter .mcap { font-size: 11.5px; color: var(--muted); margin-top: 5px; }
+
+    /* fan-in: emphasis, not 21 categorical hues */
+    .fan { border: 1px solid var(--border); border-radius: 14px; background: linear-gradient(180deg,#fdfdff,#f5f5fa); box-shadow: var(--shadow); padding: 20px; margin: 20px 0; }
+    .fangrid { display: grid; grid-template-columns: 1fr 40px 1.1fr; gap: 12px; align-items: center; }
+    .fansrc { display: flex; flex-wrap: wrap; gap: 5px; }
+    .fanchip { font-size: 10.5px; border: 1px solid var(--border); background: #fff; border-radius: 20px; padding: 2px 8px; color: var(--muted); }
+    .fanarrow { text-align: center; font-size: 22px; color: var(--accent); font-weight: 700; }
+    .fandst { border: 2px solid var(--accent); border-radius: var(--radius); background: var(--accent-dim); padding: 12px 14px; text-align: center; }
+    .fandst b { display: block; font-size: 14px; color: var(--accent); }
+    .fandst span { font-size: 11.5px; color: var(--muted); }
+    .fancap { font-size: 11.5px; color: var(--muted); text-align: center; margin-top: 12px; }
+
+    /* architecture comparison */
+    .arch { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0; }
+    .ac { border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); padding: 14px 16px; box-shadow: var(--shadow); }
+    .ac.them { border-top: 3px solid var(--red); }
+    .ac.us { border-top: 3px solid var(--green); }
+    .ac h4 { font-size: 12px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 10px; }
+    .ac.them h4 { color: var(--red); } .ac.us h4 { color: var(--green); }
+    .step { background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 7px 10px; margin: 6px 0; font-size: 12px; font-family: var(--mono); }
+    .step.hl { border-color: var(--accent); background: var(--accent-dim); color: var(--accent); font-weight: 700; }
+    .derive { margin: 6px 0 0 12px; font-size: 11.5px; color: var(--muted); border-left: 2px solid var(--border); padding-left: 10px; }
+    .derive div { margin: 3px 0; }
+
+    @media (max-width: 860px) {
+      .verdict, .arch { grid-template-columns: 1fr; }
+      .kpis { grid-template-columns: 1fr 1fr; }
+      .fangrid { grid-template-columns: 1fr; }
+      .fanarrow { transform: rotate(90deg); }
+    }
+  body{border-top:3px solid var(--mtl-red)}</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div style="font-size:12.5px;color:var(--muted);margin:-4px 0 18px"><a href="proposal.html">English</a> · <span style="font-weight:700;color:var(--text)">Français</span></div>
+
+  <header class="doc">
+    <div class="eyebrow"><span style="color:var(--mtl-red)">&#9884;</span> Proposition · approche technique · ALL IN 2026 × Ville de Montréal</div>
+    <h1>Défi IA : réinventer l'expérience citoyenne</h1>
+    <div class="meta"><b>Version préliminaire 2026-07-15</b> · Date limite de dépôt <b>2026-07-24</b> · Olotalk · Chaque chiffre ci-dessous est calculé à partir des données ouvertes de la Ville elle-même (Requêtes 311, CC-BY 4.0, 3,034,731 requêtes) — aucun n'est une estimation · Résultat phare validé <b>hors échantillon</b> · Un script de reproduction accompagne ce document</div>
+  </header>
+
+  <div class="callout c-find">
+    <span class="lbl">Ce que ce document affirme</span>
+    <p class="hero">L'énoncé du défi demande une IA qui lit une photo et achemine la requête. Nous avons d'abord mesuré quatre années d'acheminement à Montréal — et <b>l'acheminement n'est pas le problème d'IA.</b> Il est reproductible à 97% au moyen d'un test d'appartenance et d'une table de correspondance. Le véritable rôle de la photo est de choisir parmi un catalogue vivant et mouvant d'environ 500 catégories, et c'est là un problème de repérage, pas un classificateur.</p>
+  </div>
+
+  <div class="verdict">
+    <div class="vcard yes">
+      <div class="vh">✓ Ce que nous avons mesuré</div>
+      <p><b>1,529,458</b> requêtes localisées, <b>901</b> catégories, 2022→2026, comparées aux décisions d'acheminement réelles de la Ville.</p>
+      <p>Réservées hors échantillon : politique ajustée sur 2022–24, testée sur 2025–26.</p>
+    </div>
+    <div class="vcard crux">
+      <div class="vh">✕ Le piège</div>
+      <p>Un modèle qui repère un feu de circulation défectueux dans Ville-Marie et l'achemine vers Ville-Marie <b>a tort.</b></p>
+      <p>Les feux de circulation sont gérés à l'échelle de l'île depuis Rosemont. Aucun classificateur de photos ne peut le savoir.</p>
+    </div>
+    <div class="vcard path">
+      <div class="vh">→ L'architecture</div>
+      <p><b>Le modèle propose l'actif. Le registre détermine le propriétaire.</b></p>
+      <p>Le modèle n'émet jamais de nom de service — il ne peut donc pas mal acheminer par hallucination.</p>
+    </div>
+  </div>
+
+  <div class="heroblock">
+    <div class="herofig">97.27%</div>
+    <div class="herolab">de l'acheminement de Montréal reproduit <b>sans aucun apprentissage automatique</b> — un test d'appartenance plus un aiguillage par catégorie</div>
+    <div class="herosub">mesuré sur <b>567,859 requêtes hors échantillon</b> — 552,333 acheminées correctement · politique ajustée sur 2022–24, testée sur 2025–26</div>
+  </div>
+
+  <div class="kpis">
+    <div class="kpi pos">
+      <div class="kl">La géométrie seule, sur le même ensemble hors échantillon</div>
+      <div class="kv">90.95%</div>
+      <div class="kd">aucune photo · aucun texte · aucun modèle</div>
+    </div>
+    <div class="kpi">
+      <div class="kl">Requêtes dans le jeu de données</div>
+      <div class="kv">3.03M</div>
+      <div class="kd">balayées en totalité · l'évaluation de l'acheminement utilise les 1.53M qui sont localisées</div>
+    </div>
+    <div class="kpi">
+      <div class="kl">Catégories actives sur les requêtes de 2026</div>
+      <div class="kv">513</div>
+      <div class="kd">993 depuis le début · 252 retirées</div>
+    </div>
+    <div class="kpi">
+      <div class="kl">Volume 311 arrivant encore par téléphone</div>
+      <div class="kv">82%</div>
+      <div class="kd">2,489,180 appels · mobile 5.3%</div>
+    </div>
+  </div>
+
+  <h2><span class="n">1</span>Nous avons mesuré le problème avant de concevoir une solution</h2>
+
+  <p>Chaque chiffre ici est calculé à partir des données publiées par la Ville — principalement les <b>Requêtes 311</b> (<code>donnees.montreal.ca/dataset/requete-311</code>, CC-BY 4.0), recoupées avec la <b>Base de données des actifs de voirie</b>, la <b>Géobase</b>, le <b>Réseau artériel administratif (RAAV)</b>, les <b>Limites administratives de l'agglomération</b> et le <b>Réseau routier — RTSS</b> du MTQ. L'avoir fait en premier a changé notre conception.</p>
+
+  <h3>Fait 1 — le système de classification est vaste, et il évolue</h3>
+  <p>L'énoncé du défi propose des exemples (« nid-de-poule, déchets, graffiti »). <code>ACTI_NOM</code> contient <b>993 valeurs distinctes sur la période</b> — mais le chiffre utile est plus petit et plus révélateur. <b>252 sont retirées</b>, marquées d'un astérisque en préfixe (<code>*Réclamation</code> court jusqu'au 2025-10-22 ; <code>Réclamation</code> commence le 2025-10-23 — un simple renommage). En excluant les retraits et le roulement, <b>513 catégories ont été utilisées sur des requêtes de service en 2026 seulement</b>.</p>
+  <div class="callout c-find">
+    <span class="lbl">Pourquoi cela condamne le classificateur</span>
+    <p>Cinq cents, c'est encore deux ordres de grandeur au-delà d'un menu déroulant — mais le roulement est l'argument le plus tranchant. <b>Un classificateur entraîné sur les étiquettes de 2022 émettrait <code>*Réclamation</code> aujourd'hui.</b> La taxonomie est un document vivant que la Ville tient à jour, et non un ensemble d'étiquettes figé — et sa propre méthodologie prévient que <em>« des arrondissements utilisent des catégories supplémentaires qui leur sont spécifiques »</em>, de sorte qu'il ne s'agit même pas d'une seule liste uniforme à l'échelle de la ville.</p>
+  </div>
+
+  <h3>Fait 2 — la catégorie ne nomme pas le propriétaire</h3>
+  <p><code>Nid-de-poule</code> — une seule catégorie, <b>55,916</b> requêtes de service — est traitée par <b>19 unités responsables distinctes</b>. <code>Collecte de déchets</code> en couvre 21, <code>Feux de circulation - Entretien</code> 21, <code>Occupation du domaine public</code> 20. Connaître la catégorie vous dit en quoi consiste le travail. Cela ne vous dit pas <em>à qui</em> il revient.</p>
+
+  <h3>Fait 3 — l'acheminement n'est presque pas un problème d'IA</h3>
+  <table>
+    <thead><tr><th>Règle</th><th>Ce qu'elle utilise</th><th>Dans l'échantillon</th><th>Hors échantillon (2025–26)</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><b>A</b> — le territoire géographique seul</td>
+        <td>un test d'appartenance</td>
+        <td class="num">90.33%</td>
+        <td class="num"><b>90.95%</b><br><span style="color:var(--muted);font-size:11px">516,486 / 567,859</span></td>
+      </tr>
+      <tr>
+        <td><b>B</b> — la règle A, plus un aiguillage par catégorie : <em>cette classe relève-t-elle de la géométrie, ou d'une unité fixe ?</em></td>
+        <td>un test d'appartenance et une table de correspondance</td>
+        <td class="num">97.55%</td>
+        <td class="num"><b>97.27%</b><br><span style="color:var(--muted);font-size:11px">552,333 / 567,859</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <p>Ni l'une ni l'autre des règles n'utilise de photo, de description ou de modèle quelconque. Les deux se maintiennent hors échantillon — la règle A est <em>meilleure</em> sur les données hors échantillon que dans l'échantillon.</p>
+
+  <div class="callout c-warn">
+    <span class="lbl">Trois dénominateurs — à ne pas confondre</span>
+    <p>Ce document rapporte des chiffres sur trois populations différentes, et le résultat phare repose sur la plus petite :</p>
+    <ul style="margin-top:6px">
+      <li><b>3,034,731</b> — chaque requête du jeu de données. Balayées en totalité pour la taxonomie, la répartition des canaux et les chiffres NATURE. Rien n'est échantillonné.</li>
+      <li><b>1,529,458</b> — les requêtes de service localisées (<code>NATURE='Requete'</code>, géocodées, à l'exclusion des lignes rattachées au BAM) sur lesquelles les règles dans l'échantillon sont mesurées.</li>
+      <li><b>567,859</b> — la tranche hors échantillon de 2025–26 sur laquelle reposent réellement <b>les chiffres de 97.27% et 90.95%</b>, la politique n'étant ajustée que sur 2022–24.</li>
+    </ul>
+  </div>
+
+  <p>L'aiguillage de la règle B bascule pour <b>142 des 901 catégories</b>, et il encode une structure municipale réelle. Montréal exploite plusieurs classes d'actifs en <b>service partagé</b> :</p>
+
+  <div class="meter">
+    <div class="mrow"><span class="mname">Feux de circulation → Rosemont–La Petite-Patrie</span><span class="mval">74.7%</span></div>
+    <div class="track"><div class="fill" style="width:74.7%"></div></div>
+    <div class="mcap">33,435 requêtes de service à l'échelle de l'île, provenant de 21 territoires différents</div>
+  </div>
+  <div class="meter">
+    <div class="mrow"><span class="mname">Éclairage → Rosemont–La Petite-Patrie</span><span class="mval">66.9%</span></div>
+    <div class="track"><div class="fill" style="width:66.9%"></div></div>
+    <div class="mcap">provenant de 23 territoires différents</div>
+  </div>
+  <div class="meter">
+    <div class="mrow"><span class="mname">Entretien de la signalisation prioritaire → Rosemont–La Petite-Patrie</span><span class="mval">73.3%</span></div>
+    <div class="track"><div class="fill" style="width:73.3%"></div></div>
+  </div>
+
+  <div class="fan">
+    <div class="fangrid">
+      <div class="fansrc">
+        <span class="fanchip">Ville-Marie</span><span class="fanchip">Le Plateau</span><span class="fanchip">Villeray–St-Michel</span><span class="fanchip">Côte-des-Neiges–NDG</span><span class="fanchip">Mercier–HoMa</span><span class="fanchip">Ahuntsic-Cartierville</span><span class="fanchip">Rosemont</span><span class="fanchip">Sud-Ouest</span><span class="fanchip">RDP–PAT</span><span class="fanchip">Saint-Laurent</span><span class="fanchip">Verdun</span><span class="fanchip">LaSalle</span><span class="fanchip">Anjou</span><span class="fanchip">Lachine</span><span class="fanchip">Saint-Léonard</span><span class="fanchip">Montréal-Nord</span><span class="fanchip">Outremont</span><span class="fanchip">Côte-Saint-Luc</span><span class="fanchip">Hampstead</span><span class="fanchip">Mont-Royal</span><span class="fanchip">Westmount</span>
+      </div>
+      <div class="fanarrow">→</div>
+      <div class="fandst">
+        <b>Rosemont–La Petite-Patrie</b>
+        <span>s'occupe des feux de circulation pour tous</span>
+      </div>
+    </div>
+    <div class="fancap">Là où une requête de feu de circulation est <em>déposée</em> (21 territoires) par rapport à là où elle est <em>exécutée</em> (un seul arrondissement). À noter que quatre des sources sont des villes liées — des municipalités distinctes.</div>
+  </div>
+
+  <div class="callout c-bad">
+    <span class="lbl">Voilà le piège du défi</span>
+    <p>Un système qui repère correctement un feu de circulation défectueux dans Ville-Marie et l'achemine vers Ville-Marie <b>a tort</b> — la réponse est Rosemont, trois fois sur quatre. Aucun classificateur de photos ne peut le savoir. Aucun test d'appartenance ne peut le savoir. <b>Seule la propriété de l'actif le sait</b> — et la démo d'un concurrent n'a aucune vérité terrain pour révéler l'erreur.</p>
+  </div>
+
+  <h2><span class="n">2</span>L'architecture : résoudre l'actif, en déduire tout le reste</h2>
+
+  <div class="arch">
+    <div class="ac them">
+      <h4>✕ Ce que l'énoncé du défi sous-entend</h4>
+      <div class="step">photo</div>
+      <div class="step">↓ classificateur</div>
+      <div class="step">↓ catégorie</div>
+      <div class="step">↓ recherche du service</div>
+      <div class="step">↓ bon de travail</div>
+      <p style="font-size:12px;color:var(--muted);margin-top:10px">Cinq sous-systèmes. La démo montre le plus facile. L'étape d'acheminement est là où il échoue silencieusement.</p>
+    </div>
+    <div class="ac us">
+      <h4>✓ La nôtre</h4>
+      <div class="step">photo + localisation + voix/texte</div>
+      <div class="step hl">↓ RÉSOLUTION DE L'ACTIF</div>
+      <div class="step">tronçon 1042318 · arbre #3341-22 · puisard</div>
+      <div class="derive">
+        <div><b>propriétaire</b> = réconcilié entre les autorités → acheminement, y compris « pas à nous »</div>
+        <div><b>catégorie</b> = repérée dans le catalogue vivant</div>
+        <div><b>localisation</b> = l'objet, pas une coordonnée</div>
+        <div><b>doublon</b> = même actif, à travers les requêtes</div>
+        <div><b>priorité</b> = combien de requêtes nomment cet actif</div>
+      </div>
+      <p style="font-size:12px;color:var(--muted);margin-top:10px">Cinq des exigences de l'énoncé découlent d'une <b>seule primitive</b>.</p>
+    </div>
+  </div>
+
+  <p>La résolution d'actif est une <b>résolution d'entité contre un registre</b> — du repérage sur un corpus, soit le système qu'Olotalk exploite déjà. Ce n'est pas un classificateur, et cette distinction est ce qui rend traitables à la fois la longue traîne et le roulement : on ne peut pas réentraîner un classificateur à 513 classes chaque fois qu'un arrondissement renomme une catégorie, mais un index de repérage sur le catalogue courant absorbe un renommage gratuitement.</p>
+
+  <h3>Le véritable rôle de l'IA</h3>
+  <p>Le modèle fait exactement deux choses, et aucune n'est l'acheminement :</p>
+  <ol>
+    <li><b>Classe d'actif + défaut à partir de la photo</b> — un modèle vision-langage ancré dans le catalogue de la Ville plutôt que dans un ensemble d'étiquettes figé : <em>chaussée / nid-de-poule</em>, <em>arbre / branche tombée</em>, <em>puisard / obstrué</em>. C'est là que la photo prouve son utilité.</li>
+    <li><b>Repérer la catégorie</b> pour cette paire (classe d'actif, défaut) dans le catalogue vivant, en utilisant les propres mots du citoyen comme signal additionnel.</li>
+  </ol>
+  <p>Tout ce qui suit en aval est une jointure déterministe.</p>
+
+  <h3>Une seule question, uniquement quand elle change la réponse</h3>
+  <p>Nous ne présentons pas de formulaire. Quand la résolution est ambiguë <em>et</em> que l'ambiguïté change l'acheminement, le système pose exactement une question — <em>« Le nid-de-poule est-il dans la voie de circulation ou dans la voie cyclable ? »</em> — choisie parce que sa réponse fait basculer le service. Si la réponse ne change rien, nous ne demandons pas.</p>
+
+  <h2><span class="n">3</span>La garantie d'ancrage</h2>
+
+  <div class="callout c-good">
+    <span class="lbl">La propriété fondamentale d'IA responsable</span>
+    <p class="hero">Le modèle n'émet jamais de nom de service. Il émet un actif. Le registre réconcilié émet le service.</p>
+  </div>
+
+  <ul>
+    <li>L'acheminement est une <b>jointure avec provenance</b>, pas une sortie de modèle. Il ne peut pas halluciner un service, car aucune étape générative n'est autorisée à en nommer un.</li>
+    <li>Chaque décision d'acheminement porte une <b>raison citable</b> : ce tronçon, cette autorité, ce règlement. C'est une piste de vérification qu'une administration publique peut défendre.</li>
+    <li>Le mode de défaillance est <b>« je n'ai pas pu résoudre ceci »</b> — détectable, susceptible de refus, acheminable vers un humain — plutôt que d'<b>avoir tort avec assurance</b>, qui est le mode de défaillance d'un classificateur et celui qui coûte à la Ville un déplacement de camion vers un actif qu'elle ne possède pas.</li>
+  </ul>
+
+  <h2><span class="n">4</span>La réponse sur la compétence n'existe pas encore. C'est là l'occasion.</h2>
+
+  <p>La propre page de Montréal sur les nids-de-poule indique aux citoyens : <em>« Le nid-de-poule se trouve-t-il sur une autoroute ou une voie de desserte ? Communiquez avec le Ministère des Transports en composant le 511. »</em> <b>La Ville demande au citoyen d'effectuer la détermination de la compétence.</b></p>
+
+  <p>Nous avons d'abord supposé qu'il s'agissait d'une jointure de données inexploitée. Ce n'est pas le cas. Nous avons vérifié, et le constat a remodelé notre proposition.</p>
+
+  <div class="callout c-bad">
+    <span class="lbl">La jointure que nous pensions fonctionnelle, et qui ne l'est pas</span>
+    <p>La base de données des actifs de la Voirie comporte une colonne nommée <code>PROPRIETAIRE_REF</code>. Son dictionnaire de valeurs autorise <code>Ministère Transport Québec</code>, <code>Société Transport Montréal</code>, <code>Service des Grands Parcs</code> et <code>Privé</code>. <b>Sur les 16,750 actifs de chaussée réels, ces valeurs sont pratiquement absentes</b> — la colonne est remplie avec le <em>territoire dans lequel se trouve l'actif</em>. La couche est en outre figée à <code>DATE_VERSION = 2020-05-30</code>.</p>
+  </div>
+
+  <table>
+    <thead><tr><th>Classe d'actif dans le registre</th><th>Propriétaire donné par le registre</th><th>Lignes</th><th>Réellement possédé par</th></tr></thead>
+    <tbody>
+      <tr><td><code>Bretelle</code> (bretelle d'autoroute)</td><td>Saint-Laurent</td><td class="num">61</td><td><span class="tag t-gap">MTQ — provincial</span></td></tr>
+      <tr><td><code>Autoroute</code></td><td>Saint-Laurent</td><td class="num">60</td><td><span class="tag t-gap">MTQ — provincial</span></td></tr>
+      <tr><td><code>Autoroute</code></td><td>Sud-Ouest</td><td class="num">35</td><td><span class="tag t-gap">MTQ — provincial</span></td></tr>
+      <tr><td><code>Autoroute</code></td><td>Côte-des-Neiges–NDG</td><td class="num">31</td><td><span class="tag t-gap">MTQ — provincial</span></td></tr>
+    </tbody>
+  </table>
+
+  <p>Une jointure naïve sur le champ nommé « propriétaire » enverrait un <b>nid-de-poule d'autoroute provinciale à une équipe d'arrondissement</b> — précisément le mauvais acheminement plein d'assurance que le §3 existe pour prévenir, précisément dans le cas où montreal.ca dit de composer le 511.</p>
+
+  <div class="callout c-find">
+    <span class="lbl">Pourquoi cela importe plus que la jointure que nous espérions</span>
+    <p><b>Voilà pourquoi la Ville demande encore au citoyen.</b> Ses propres données ne peuvent pas répondre à la question non plus. Le fait de compétence doit donc être <em>assemblé</em> — à partir d'autorités qui se contredisent les unes les autres.</p>
+  </div>
+
+  <table>
+    <thead><tr><th>Autorité</th><th>Ce à quoi elle répond</th><th>Millésime / réserve</th></tr></thead>
+    <tbody>
+      <tr><td>MTQ <b>RTSS</b> (WFS en direct, CC-BY)</td><td>Réseau provincial — sa <em>portée</em> est la réponse ; présence ≈ pas à la Ville. Porte <code>gestion</code> et <code>entretien</code> séparément.</td><td><span class="tag t-have">En direct</span></td></tr>
+      <tr><td><b>Limites administratives</b></td><td><code>TYPE</code> = <em>Arrondissement</em> ×19 vs <em>Ville liée</em> ×15</td><td><span class="tag t-have">À jour</span></td></tr>
+      <tr><td><b>RAAV</b> <code>ARTERE</code></td><td>Règlement 02-003 : partage conseil central vs conseil d'arrondissement</td><td><span class="tag t-part">2023 · GPKG seulement · contient des erreurs d'indicateur</span></td></tr>
+      <tr><td><b>Registre comportemental 311</b></td><td>Quatre années indiquant où le travail est réellement allé</td><td><span class="tag t-have">La base probante de la règle B</span></td></tr>
+      <tr><td>Voirie <code>PROPRIETAIRE_REF</code></td><td><b>Territoire, pas propriété</b> — ne pas utiliser pour la compétence</td><td><span class="tag t-gap">Figée 2020</span></td></tr>
+    </tbody>
+  </table>
+
+  <p>Réconcilier tout cela avec une <b>provenance par champ, et refuser lorsqu'elles se contredisent</b>, voilà le travail. N'importe qui peut faire une jointure sur une colonne propre. Il n'y en a pas. Cette réconciliation — ingérer des sources contradictoires dans une seule vue interrogeable et citable, et savoir quand s'abstenir — est précisément ce que fait la pile technologique d'Olotalk.</p>
+
+  <h3>La demande est réelle et actuellement non desservie</h3>
+  <p>Même si aucune ville liée n'est jamais une unité responsable, et que Westmount exploite son propre formulaire de signalement, <b>le 311 reçoit des signalements de nids-de-poule qui proviennent géographiquement de villes liées</b> :</p>
+  <table>
+    <thead><tr><th>Ville liée (municipalité distincte)</th><th>Signalements de nids-de-poule reçus au 311 de Montréal</th></tr></thead>
+    <tbody>
+      <tr><td>Mont-Royal</td><td class="num">169</td></tr>
+      <tr><td>Westmount</td><td class="num">91</td></tr>
+      <tr><td>Dorval</td><td class="num">20</td></tr>
+      <tr><td>Côte-Saint-Luc</td><td class="num">9</td></tr>
+      <tr><td>Sept autres</td><td class="num">22</td></tr>
+      <tr><td><b>Total</b></td><td class="num"><b>311</b></td></tr>
+    </tbody>
+  </table>
+  <p>Les citoyens ne savent pas où se trouve la limite ; ce n'est pas une chose à attendre d'eux. La Ville dispose déjà d'une catégorie fourre-tout pour le cas général : <b><code>Organisme divers</code> — 47,578 requêtes, dont 47,577 consignées comme <code>Information</code> plutôt que comme travail.</b> C'est la voie actuelle du « cela appartient à quelqu'un d'autre », soit 1.6% de tout le trafic, et c'est notre point de référence à battre.</p>
+
+  <h2><span class="n">5</span>Doublons : la Ville compte déjà. Personne ne regroupe.</h2>
+
+  <p>Nous avons failli proposer « les doublons sont des votes, et aujourd'hui le vote est jeté ». C'est faux, et le propre schéma de la Ville le confirme. <code>PROVENANCE_TELEPHONE</code> n'est pas un indicateur — le dictionnaire le définit comme <em>« Nombre de requérants différents via téléphone »</em>. <b>202,271 requêtes de service portent déjà plus d'un requérant distinct</b> ; 13,044 en portent exactement quatre. Montréal fusionne les signalements en double en une seule requête et en préserve le compte.</p>
+
+  <div class="callout c-find">
+    <span class="lbl">L'écart est un cran plus haut</span>
+    <p><b>Le compte est par requête ; rien ne regroupe les requêtes entre elles vers un actif.</b> Quatre requêtes distinctes nommant le même puisard au cours d'une année demeurent quatre lignes sans lien, parce qu'il n'y a aucune identité d'actif pour les regrouper. Résolvez jusqu'à l'actif et le regroupement est exact — même objet, même défaut, même fenêtre, aucun seuil de similarité à régler — et la Ville obtient un signal qu'elle ne peut actuellement pas assembler : non pas <em>« cette requête a eu quatre appelants »</em>, mais <em>« cet actif a fait l'objet de quatre requêtes cette année »</em>.</p>
+  </div>
+
+  <h2><span class="n">6</span>Confidentialité : nous reproduisons le propre modèle à deux paliers de la Ville</h2>
+
+  <blockquote>« Pour respecter la confidentialité des requérants, cette position géographique est ensuite obfusquée: les requêtes associées à des adresses ou installations particulières sont relocalisées au milieu du tronçon le plus près ayant une longueur de plus de 45 mètres. »</blockquote>
+
+  <p>La Ville exploite <b>deux paliers</b> : localisation précise à l'interne, parce que c'est ainsi qu'une équipe est dépêchée ; <b>généralisée au tronçon</b> à la publication, parce que c'est la granularité qu'a bénie son analyse de confidentialité. Nous adoptons les deux mêmes paliers plutôt que d'en inventer un troisième — précise pour la répartition, généralisée au tronçon pour la conservation, l'analytique et tout ce qui est publié.</p>
+
+  <div class="callout c-warn">
+    <span class="lbl">Ce que nous ne prétendons pas</span>
+    <p>Résoudre jusqu'à un actif précis est, pour certaines classes, <b>plus identifiant que la granularité publiée par la Ville</b> — un arbre de rue fait face à une seule maison. La conservation à l'échelle de l'actif est donc une posture qui doit être convenue avec le contentieux de la Ville en vertu de la <b>Loi 25</b>, par classe d'actif. Ce n'est pas quelque chose que nous pouvons affirmer en pointant la règle d'obfuscation. Ce que nous pouvons dire, c'est que Montréal a déjà fait le raisonnement sur la granularité de localisation comme levier de confidentialité, et a publié où elle a abouti. Nous partons de là plutôt que de zéro.</p>
+  </div>
+
+  <ul>
+    <li><b>Caviardage à la réception.</b> Les photos citoyennes du domaine public contiennent des visages et des plaques d'immatriculation. La détection et le caviardage irréversible se produisent avant le stockage, et non avant l'affichage. Nous nous attendons à être la seule soumission à soulever ce point.</li>
+    <li><b>La voix est transcrite puis supprimée.</b> Un enregistrement s'apparente à une donnée biométrique en vertu de la Loi 25 ; la transcription, non.</li>
+    <li><b>Le corpus ne quitte jamais le périmètre.</b> Les modèles de plongement (embeddings) et de vision d'Olotalk sont déjà auto-hébergés — aucune API tierce ne voit le contenu ingéré.</li>
+    <li><b>La localisation porte sur l'objet du problème, pas sur le déclarant</b> — conformément à la propre règle de la Ville : <em>« La localisation concerne le lieu de la requête et non la localisation du requérant. »</em></li>
+  </ul>
+
+  <h3>Déploiement et souveraineté</h3>
+  <p>La pile Olotalk est un ensemble Compose autonome, et le point de terminaison d'inférence se configure par variable d'environnement au moyen d'une interface compatible OpenAI. <b>Fonctionner entièrement à l'intérieur du périmètre de la Ville — y compris le modèle qui répond — est un changement de configuration, pas une réécriture.</b> Nous déployons selon une échelle : multilocataire partagé → isolation par locataire → instance dédiée avec résidence canadienne → à l'intérieur du VPC de la Ville → sur site.</p>
+  <p>Le jury devrait présumer que toute soumission incapable d'affirmer cela acheminera les photographies, la voix et la localisation des citoyens à travers une juridiction étrangère à chaque requête.</p>
+
+  <h2><span class="n">7</span>Ce que nous savons ne pas savoir</h2>
+
+  <p>Nous préférons les énoncer plutôt que de laisser le jury les découvrir.</p>
+
+  <div class="callout c-warn">
+    <span class="lbl">Menaces à notre propre résultat phare</span>
+    <ul style="margin-top:6px">
+      <li><b>Une part inconnue de notre ensemble d'évaluation n'est pas du trafic citoyen.</b> La Ville prévient : <em>« Certains arrondissements utilisent également la plateforme pour assigner des tâches internes… Le système ne permet pas de distinguer ce type de demande interne. »</em> Les bons de travail internes sont créés <em>par</em> l'unité qui les exécute, ce qui <b>gonfle la règle A en notre faveur</b>. Nous ne pouvons pas en évaluer l'ampleur.</li>
+      <li><b>La règle A est peut-être en partie tautologique.</b> Si <code>UNITE_RESP_PARENT</code> est elle-même auto-attribuée à partir de la coordonnée par le système de la Ville, « la géométrie prédit l'unité » ne fait que reformuler en partie cette règle plutôt que de la découvrir. Les exceptions de service partagé montrent qu'elle n'est pas <em>purement</em> géométrique, et l'argument du §9 repose sur le coût du canal plutôt que sur l'exactitude — mais la réserve demeure.</li>
+      <li><b>La règle A n'est pas un test point-dans-polygone tel que mesuré.</b> Elle utilise la colonne <code>ARRONDISSEMENT_GEO</code> <em>précalculée</em> de la Ville plus une table de normalisation des noms à 19 entrées. Un substitut raisonnable pour un test d'appartenance — et nous le disons plutôt que de laisser entendre que nous en avons exécuté un.</li>
+      <li><b>La règle B est une politique ajustée, pas un bit par catégorie.</b> C'est un aiguillage plus, pour 142 catégories, l'identité de l'unité gagnante choisie par argmax. C'est le résultat hors échantillon qui la défend — pas le nombre de paramètres.</li>
+      <li><b>Notre vérité terrain est l'unité responsable finale.</b> Le jeu de données n'expose pas les réacheminements, de sorte que nous reproduisons le point d'arrivée du processus de la Ville, pas ses décisions intermédiaires.</li>
+    </ul>
+  </div>
+
+  <ul>
+    <li><b>90.33% est un plancher.</b> Cette valeur a été mesurée <em>à travers</em> l'obfuscation à 45 mètres de la Ville, qui rabat les signalements au milieu des tronçons et saute les tronçons de moins de 45 m, injectant un bruit d'étiquetage que nous ne pouvons pas retirer. Le vrai GPS d'un téléphone fait strictement mieux.</li>
+    <li><b>La règle A obtient 0% sur les 2,417 requêtes provenant de villes liées</b> — elle prédit une unité qui n'existe pas. Négligeable pour le résultat phare (0.16%) mais un angle mort structurel dans précisément le parcours de compétence que nous vendons.</li>
+    <li><b>La propriété des poteaux n'est pas uniforme et nous ne pouvons pas la résoudre poteau par poteau.</b> Les données d'Hydro-Québec sont zonales (443 polygones) ; à Pierrefonds et à Dorval, le gestionnaire du parc de poteaux est <b>Bell</b>, pas HQ. Le portail ouvert de HQ est <b>CC-BY-NC</b> — une véritable contrainte pour un déploiement commercial.</li>
+    <li><b>Les abribus n'ont de géodonnées nulle part.</b> Ceux de Québecor, dans le cadre d'un contrat qui courrait jusqu'en 2032, joignables au 514-ABRIBUS ; nous n'avons pas confirmé leur statut en 2026. Ce qui corrobore la lacune : <code>Abribus - Nettoyage</code> compte <b>exactement 1 enregistrement sur 3,034,731</b>. Nous acheminerions les abribus par catégorie, pas par géométrie.</li>
+    <li><b>Nous n'avons pas lu le règlement 02-003</b>, seulement la paraphrase faisant autorité de la Ville dans les métadonnées du RAAV. Nous en ferions la demande auprès du Service du greffe.</li>
+    <li><b>La Banque d'information 311 est désormais restreinte par RPV.</b> La taxonomie que nous avons reconstruite à partir de <code>ACTI_NOM</code> en est une approximation, non un substitut. Nous en demanderions l'accès à titre de participant.</li>
+    <li><b>62,008 requêtes sont rattachées à un bureau d'arrondissement</b> (<code>LOC_ERREUR_GDT=1</code>), exclues de chaque mesure ci-dessus. Une large part sont des dépôts au comptoir en personne, de sorte que ce n'est pas purement « la Ville n'a pas pu la localiser ».</li>
+  </ul>
+
+  <h2><span class="n">8</span>Maturité : ce qui existe aujourd'hui, ce que nous construisons</h2>
+
+  <table>
+    <thead><tr><th>Capacité</th><th>Statut</th></tr></thead>
+    <tbody>
+      <tr><td>Ingestion et repérage multilocataires sur un corpus vivant</td><td><span class="tag t-have">En production (bêta privée)</span></td></tr>
+      <tr><td>Plongements (embeddings) auto-hébergés — le corpus n'atteint jamais une API tierce</td><td><span class="tag t-have">En production</span></td></tr>
+      <tr><td>Chaîne de vision : image → VLM → extraction structurée</td><td><span class="tag t-have">En production</span></td></tr>
+      <tr><td>Génération ancrée avec citation et refus</td><td><span class="tag t-have">En production</span></td></tr>
+      <tr><td>Boucle conversationnelle qui pose des questions de clarification</td><td><span class="tag t-have">En production</span></td></tr>
+      <tr><td>Réconciliation multi-autorités + la jointure géospatiale</td><td><span class="tag t-new">Nouveau pour ce défi</span></td></tr>
+      <tr><td>Reconnaissance vocale</td><td><span class="tag t-new">Nouveau</span></td></tr>
+      <tr><td>Index de repérage des catégories sur le catalogue vivant</td><td><span class="tag t-new">Nouveau</span></td></tr>
+      <tr><td>Caviardage des photos à la réception</td><td><span class="tag t-new">Nouveau</span></td></tr>
+      <tr><td>Déploiement municipal / client gouvernemental</td><td><span class="tag t-gap">Nous n'en revendiquons aucun</span></td></tr>
+    </tbody>
+  </table>
+
+  <p>Olotalk est en bêta privée. Notre réponse à « résultats démontrés » n'est pas un logo — c'est que nous avons mesuré ce problème contre 1.5 million de requêtes historiques de la Ville elle-même avant d'écrire une ligne de proposition, que nous avons réservé notre résultat phare hors échantillon, et que nous montrons les parties qui ne nous flattent pas, <b>y compris la jointure que nous pensions fonctionnelle et qui ne l'est pas.</b></p>
+
+  <h2><span class="n">9</span>Pourquoi cela l'emporte pour la Ville, dans les chiffres de la Ville</h2>
+
+  <p>L'énoncé du défi demande une réduction des erreurs de catégorisation et un acheminement plus rapide. Les données disent que le gain est plus grand et ailleurs.</p>
+
+  <div class="callout c-find">
+    <span class="lbl">La véritable occasion</span>
+    <p><b>82% de tout le volume 311 — 2,489,180 requêtes sur 3,034,731 — arrive encore par téléphone.</b> Le mobile représente 5.3% ; le Web, 3.0%.</p>
+    <p>Et l'acheminement de la Ville n'est pas négligé — il est <em>hautement régulier</em>. Que nous ayons pu en reproduire <b>97.27% hors échantillon</b> au moyen d'un test d'appartenance et d'une table de correspondance en est la preuve même : un processus à ce point réductible est un processus mené de façon constante et compétente par les gens qui le mènent.</p>
+    <p class="hero" style="margin-top:10px">L'occasion n'est donc pas que les agents de Montréal commettent des erreurs. C'est que leur exactitude coûte actuellement un appel téléphonique à chaque fois.</p>
+  </div>
+
+  <figure class="chart">
+    <h4>82% de chaque requête 311 arrive encore par téléphone</h4>
+    <div class="csub">Répartition de 3.07M requêtes par canal de réception · Données ouvertes 311 de la Ville de Montréal</div>
+    <svg viewBox="0 0 700 178" width="100%" role="img" aria-label="311 channel mix — 82% by telephone" style="max-width:100%"><rect x="140" y="6" width="470.0" height="20" rx="3" fill="var(--accent)"/><text x="132" y="16.5" text-anchor="end" dominant-baseline="middle" font-size="12" fill="var(--muted)" font-family="-apple-system,sans-serif">Par téléphone</text><text x="617.0" y="16.5" dominant-baseline="middle" font-size="12" font-weight="700" fill="var(--accent)" font-family="var(--mono),monospace" style="font-variant-numeric:tabular-nums">82.0%</text><rect x="140" y="40" width="32.7" height="20" rx="3" fill="#ccccd8"/><text x="132" y="50.5" text-anchor="end" dominant-baseline="middle" font-size="12" fill="var(--muted)" font-family="-apple-system,sans-serif">En personne</text><text x="179.7" y="50.5" dominant-baseline="middle" font-size="12" font-weight="400" fill="var(--muted)" font-family="var(--mono),monospace" style="font-variant-numeric:tabular-nums">5.7%</text><rect x="140" y="74" width="30.4" height="20" rx="3" fill="#ccccd8"/><text x="132" y="84.5" text-anchor="end" dominant-baseline="middle" font-size="12" fill="var(--muted)" font-family="-apple-system,sans-serif">Application mobile</text><text x="177.4" y="84.5" dominant-baseline="middle" font-size="12" font-weight="400" fill="var(--muted)" font-family="var(--mono),monospace" style="font-variant-numeric:tabular-nums">5.3%</text><rect x="140" y="108" width="21.2" height="20" rx="3" fill="#ccccd8"/><text x="132" y="118.5" text-anchor="end" dominant-baseline="middle" font-size="12" fill="var(--muted)" font-family="-apple-system,sans-serif">Courriel</text><text x="168.2" y="118.5" dominant-baseline="middle" font-size="12" font-weight="400" fill="var(--muted)" font-family="var(--mono),monospace" style="font-variant-numeric:tabular-nums">3.7%</text><rect x="140" y="142" width="17.2" height="20" rx="3" fill="#ccccd8"/><text x="132" y="152.5" text-anchor="end" dominant-baseline="middle" font-size="12" fill="var(--muted)" font-family="-apple-system,sans-serif">Formulaire web</text><text x="164.2" y="152.5" dominant-baseline="middle" font-size="12" font-weight="400" fill="var(--muted)" font-family="var(--mono),monospace" style="font-variant-numeric:tabular-nums">3.0%</text></svg>
+    <figcaption>L'acheminement de la Ville est déjà exact — cette exactitude coûte simplement un <b>appel téléphonique</b>, des millions de fois par année. La réception numérique est une erreur d'arrondi. Chaque signalement qui arrive déjà résolu redonne des minutes d'agent aux appelants qui ont véritablement besoin d'un humain.</figcaption>
+  </figure>
+
+  <p>Nous reproduisons cette exactitude à coût marginal nul par requête, et livrons un bon de travail déjà résolu à un actif, déjà regroupé avec les autres requêtes nommant ce même actif, déjà priorisé selon le nombre de citoyens distincts l'ayant soulevé, et déjà rejeté-avec-explication lorsqu'il revient au MTQ, à une ville liée, à Bell, à Québecor ou à un propriétaire privé.</p>
+
+  <p class="hero">Les propres agents de Montréal font déjà cela bien. Ils ne devraient pas avoir à le faire 2.5 millions de fois par année au téléphone.</p>
+
+  <div class="foot">
+    <b>Sources.</b> Requêtes 311 (CC-BY 4.0) · Base de données des actifs de voirie · Géobase · Réseau artériel administratif (RAAV) · Limites administratives de l'agglomération · MTQ Réseau routier — RTSS (CC-BY 4.0) · Hydro-Québec Parcs de poteaux (CC-BY-NC) · montreal.ca<br>
+    <b>Reproduction.</b> <code>node shadow/montreal-challenge-verify.mjs</code> redérive chaque chiffre ci-dessus à partir de l'API CKAN en direct et rapporte PASS/DRIFT/FAIL par rapport aux valeurs mesurées le 2026-07-15. Il s'exécute en <b>~23 secondes</b> et est sans dépendance : l'agrégation s'effectue <em>côté serveur dans le propre entrepôt de données de la Ville</em> (un <code>GROUP BY</code> réduit les 1,529,458 requêtes évaluées en 11,833 cellules comptées — sans perte pour cette question), de sorte que rien ici ne dépend de notre copie des données. N'importe qui, y compris la Ville, peut vérifier notre arithmétique par rapport à la source de référence. Source Markdown : <code>proposal.md</code> ; notes de terrain et impasses : <code>findings.html</code> ; chiffres canoniques à l'épreuve de la dérive : <code>SUBMISSION_NUMBERS.md</code>.
+  </div>
+
+
+</div>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Données ouvertes de Montréal — notes de terrain, impasses et pièges</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--mtl-red:#C8102E;--bg:#f8f8fa;--surface:#fff;--border:#e4e4e8;--soft:#ededf1;--text:#1a1a2e;--muted:#6b6b80;
+--accent:#4D20F5;--dim:#ede9ff;--green:#16a34a;--green-bg:#f0fdf4;--green-bd:#bbf7d0;
+--red:#dc2626;--red-bg:#fef2f2;--red-bd:#fecaca;--amber:#d97706;--amber-bg:#fffbeb;--amber-bd:#fde68a;
+--radius:10px;--radius-sm:6px;--shadow:0 1px 3px rgba(0,0,0,.08),0 1px 2px rgba(0,0,0,.04);--mono:"SF Mono","JetBrains Mono",Menlo,Consolas,monospace}
+html{font-size:16px}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.62}
+.wrap{max-width:980px;margin:0 auto;padding:56px 28px 96px}
+header.doc{border-bottom:1px solid var(--border);padding-bottom:28px;margin-bottom:36px}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+h1{font-size:29px;line-height:1.2;margin:10px 0 12px;letter-spacing:-.02em}
+.meta{font-size:13px;color:var(--muted)}.meta b{color:var(--text)}
+.back{display:inline-block;margin-bottom:18px;font-size:13px;color:var(--accent);text-decoration:none}
+h2{font-size:20px;margin:46px 0 14px;letter-spacing:-.01em}h2 .n{font-family:var(--mono);font-size:14px;color:var(--accent);margin-right:8px}
+h3{font-size:15px;margin:24px 0 8px}p{margin:12px 0}
+code{font-family:var(--mono);font-size:.86em;background:#f1f1f5;padding:1px 5px;border-radius:4px}
+pre{background:#1a1a2e;color:#e6e6f0;padding:16px 18px;border-radius:var(--radius);overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.55;margin:14px 0}
+ul,ol{margin:10px 0 10px 22px}li{margin:6px 0}a{color:var(--accent)}
+blockquote{border-left:3px solid var(--border);padding-left:16px;margin:14px 0;color:var(--muted);font-style:italic}
+.callout{border:1px solid var(--border);border-left-width:4px;border-radius:var(--radius-sm);padding:14px 18px;margin:18px 0;font-size:14.5px;background:var(--surface)}
+.callout .lbl{font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.07em;display:block;margin-bottom:4px}
+.c-find{border-left-color:var(--accent);background:var(--dim)}.c-find .lbl{color:var(--accent)}
+.c-warn{border-left-color:var(--amber);background:var(--amber-bg)}.c-warn .lbl{color:var(--amber)}
+.c-good{border-left-color:var(--green);background:var(--green-bg)}.c-good .lbl{color:var(--green)}
+.c-bad{border-left-color:var(--red);background:var(--red-bg)}.c-bad .lbl{color:var(--red)}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:13.5px}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--soft);vertical-align:top}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);border-bottom:1px solid var(--border)}
+.foot{margin-top:52px;padding-top:20px;border-top:1px solid var(--border);font-size:13px;color:var(--muted)}
+@media(max-width:640px){table{font-size:12.5px}th,td{padding:7px 8px}}
+body{border-top:3px solid var(--mtl-red)}</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="index.html">← Pôle de soumission (Montréal)</a>
+<div style="font-size:12.5px;color:var(--muted);margin:-6px 0 16px"><a href="findings.html">English</a> · <span style="font-weight:700;color:var(--text)">Français</span></div>
+<header class="doc">
+<div class="eyebrow"><span style="color:var(--mtl-red)">&#9884;</span> Complément à la proposition · notes de terrain · ce que la présentation passe sous silence</div>
+<h1>Données ouvertes de Montréal — notes de terrain, impasses et pièges</h1>
+<div class="meta">Complément à <a href="proposal.fr.html">proposal.html</a> · <b>2026-07-15</b> · l'autre moitié du travail : ce qui a coûté le plus cher à apprendre et n'apparaît nulle part dans la présentation, afin que la prochaine personne n'ait pas à le redécouvrir. Tout ici est reproductible au moyen de <code>shadow/montreal-challenge-verify.mjs</code>.</div>
+</header>
+
+<div class="callout c-find"><span class="lbl">Pourquoi ce document existe</span>
+La proposition est une présentation — sélective par nature. Les résultats négatifs ne se vendent pas, mais ils évitent à la prochaine personne (nous y compris en septembre) de foncer dans les mêmes murs. À lire avant de toucher de nouveau aux données ouvertes de Montréal.</div>
+
+<h2><span class="n">1</span>Des champs qui ne veulent pas dire ce que leur nom indique</h2>
+<p>Voici tout le document résumé en un seul tableau. Chaque ligne nous a coûté au moins une conclusion erronée.</p>
+<table>
+<thead><tr><th>Champ / jeu de données</th><th>Semble être</th><th>Est en réalité</th></tr></thead>
+<tbody>
+<tr><td><code>PROPRIETAIRE_REF</code> (actifs de voirie)</td><td>Le <b>propriétaire</b> de l'actif. Son dictionnaire autorise <code>Ministère Transport Québec</code>, <code>Société Transport Montréal</code>, <code>Privé</code>.</td><td><b>Le territoire où se trouve l'actif.</b> Ces valeurs n'apparaissent que sur ~7 des 16,750 lignes de chaussée. <b>Les autoroutes sont attribuées à des arrondissements</b> (Saint-Laurent ×121, Sud-Ouest ×68). Figé au 2020-05-30. Inutile pour la compétence — carrément dangereux.</td></tr>
+<tr><td><code>LOC_ERREUR_GDT</code></td><td>Un indicateur d'<b>erreur</b> de localisation.</td><td><em>« Information sur la précision du positionnement avant l'obfuscation »</em> — <code>0</code> = localisé au lieu du problème; <b><code>1</code> = localisé au comptoir de service BAM de l'arrondissement.</b> Pas une erreur; un marqueur « déposé en personne ». 62,453 lignes.</td></tr>
+<tr><td><code>ARRONDISSEMENT</code></td><td>Où se trouve le problème.</td><td><em>« Arrondissement attitré pour régler la requête »</em> — <b>l'arrondissement chargé de la régler.</b> Ne peut jamais désigner une ville liée, puisque Montréal n'assigne jamais de travaux à l'une d'elles.</td></tr>
+<tr><td><code>ARRONDISSEMENT_GEO</code></td><td>Un quasi-doublon du précédent.</td><td><em>« Arrondissement (géographiquement parlant) »</em> — <b>celui d'un point de vue géographique.</b> C'est la colonne à utiliser pour toute question du type « d'où provient la requête ».</td></tr>
+<tr><td><code>PROVENANCE_TELEPHONE</code></td><td>Un booléen : « arrivé par téléphone ».</td><td><em>« Nombre de requérants différents via téléphone »</em> — <b>un décompte de requérants distincts</b>, 0…14+. 200k+ requêtes en comptent plus d'un. Pour la répartition par canal, utilisez <code>PROVENANCE_ORIGINALE</code>.</td></tr>
+<tr><td><code>geobase-gestion-troncon</code></td><td>La <b>gestion</b> des tronçons de route → compétence.</td><td>Un <b>journal des modifications</b> (identifiants de tronçons, dates, types d'opérations). Précise : <em>« ne contient pas de l'information géospatiale »</em>.</td></tr>
+<tr><td><code>ACTI_NOM</code></td><td>La taxonomie en vigueur : ~993 catégories.</td><td>~993 <b>chaînes cumulées depuis toujours</b>, dont <b>279 sont désuètes</b> et précédées d'un <code>*</code> (<code>*Réclamation</code> → <code>Réclamation</code>, un simple renommage), plus ~23 paires de doublons. <b>~520 sont actives sur les requêtes de 2026.</b></td></tr>
+<tr><td><code>TYPE_LIEU_INTERV</code> nul sur 1.39M lignes</td><td>Une lacune que la Ville ne peut combler.</td><td><em>« les demandes d'information ne sont pas géoréférencées »</em>. Les valeurs nulles correspondent aux lignes <code>Information</code>. <b>Sur les requêtes de service, le champ est renseigné pour toutes sauf 7 sur 1.6M.</b></td></tr>
+</tbody>
+</table>
+
+<h2><span class="n">2</span>Impasses dans lesquelles nous nous sommes engagés</h2>
+
+<h3>Le 51% qui n'en était pas un</h3>
+<p>Comparer <code>ARRONDISSEMENT</code> à <code>ARRONDISSEMENT_GEO</code> par simple égalité de chaînes donne un <b>écart de 50.9%</b>. Il s'agit presque entièrement d'une question de formatage : <code>Mercier - Hochelaga-Maisonneuve</code> contre <code>Mercier-Hochelaga-Maisonneuve</code>. Une fois normalisé, l'écart réel est de <b>0.69%</b> — et même cela n'est pas un taux d'erreur, car les deux champs ne veulent pas dire la même chose (qui la règle contre où elle se situe).</p>
+<div class="callout c-warn"><span class="lbl">Leçon</span>Un chiffre stupéfiant issu d'une comparaison de chaînes est un bogue de chaîne jusqu'à preuve du contraire.</div>
+
+<h3>Le zéro circulaire</h3>
+<p>Filtrer les requêtes de nids-de-poule vers les villes liées au moyen d'<code>ARRONDISSEMENT</code> renvoie <b>0</b> — ce qui a l'air d'un constat (« les citoyens ne se trompent jamais de côté de la frontière ») alors qu'il ne fait que reformuler la définition de la colonne. La bonne colonne, <code>ARRONDISSEMENT_GEO</code>, renvoie <b>312</b> : Mont-Royal 169, Westmount 91, et plus encore. À Westmount, la catégorie 311 la plus fréquente est <code>Nid-de-poule</code>.</p>
+<div class="callout c-warn"><span class="lbl">Leçon</span>Le bon chiffre appuyait l'argument <em>mieux</em> que le mauvais. Les constats qui font notre affaire méritent plus d'examen, pas moins.</div>
+
+<h3>La colonne de propriétaire qui n'en est pas une</h3>
+<p>Nous avons trouvé <code>PROPRIETAIRE_REF</code>, lu son <b>dictionnaire de valeurs</b> — qui énumère exactement les tiers que nous espérions — et conclu que « la jointure de compétence est une colonne ». Nous n'avons jamais vérifié si les valeurs étaient <b>renseignées</b>. Elles ne le sont pas.</p>
+<div class="callout c-warn"><span class="lbl">Leçon</span>L'existence d'une colonne et sa liste de valeurs autorisées ne prouvent rien quant à son contenu. Vérifiez la distribution, jamais le schéma.</div>
+
+<h2><span class="n">3</span>La meilleure trouvaille : la règle d'obfuscation</h2>
+<p><b>Absente des métadonnées CKAN</b> — elle n'est affichée que sur la page du jeu de données, à la section « Production des données » :</p>
+<blockquote>« Pour respecter la confidentialité des requérants, cette position géographique est ensuite obfusquée: les requêtes associées à des adresses ou installations particulières sont <b>relocalisées au milieu du tronçon le plus près ayant une longueur de plus de 45 mètres</b>. »</blockquote>
+<div class="callout c-find"><span class="lbl">Pourquoi c'est important à deux titres</span>
+<b>Sur le plan de l'architecture :</b> l'équipe de protection de la vie privée de la Ville a choisi, de façon indépendante, le <b>tronçon</b> comme unité de localisation sûre et atomique — la même unité à laquelle se rattache la compétence. La protection de la vie privée et l'acheminement veulent la même primitive. <b>Sur le plan de l'analyse :</b> elle explique chaque anomalie de coordonnées — et nous les avions toutes mal diagnostiquées avant de la découvrir.</div>
+<table>
+<thead><tr><th>Observation</th><th>Notre lecture erronée</th><th>La vérité</th></tr></thead>
+<tbody>
+<tr><td>19,024 coordonnées distinctes pour 56,296 nids-de-poule</td><td>forte obfuscation / alignement sur une grille</td><td>~19k <b>milieux de tronçons</b>; plusieurs nids-de-poule par tronçon</td></tr>
+<tr><td>148 signalements sur une même coordonnée exacte</td><td>un point chaud suspect</td><td>148 nids-de-poule sur un même tronçon de route en 4 ans</td></tr>
+<tr><td>Deux points chauds à ~2 m l'un de l'autre</td><td>géocodes en double</td><td>le <b>milieu du même tronçon recalculé</b> après un changement de version de la géobase — voilà pourquoi <code>geobase-gestion-troncon</code> existe</td></tr>
+</tbody>
+</table>
+<p><b>Conséquence pour toute évaluation :</b> les coordonnées publiées sont des milieux de tronçons. Vous <b>ne pouvez pas</b> valider une résolution d'actif à la précision du mètre en la confrontant à l'historique 311. Vous <b>pouvez</b> valider l'acheminement à l'échelle du tronçon et du territoire — soit précisément la granularité à laquelle se situe la compétence. Le seuil de 45 m écarte en outre les tronçons courts, de sorte que toute exactitude mesurée à travers lui constitue un <b>plancher</b>.</p>
+
+<h2><span class="n">4</span>Facteurs de confusion que nous n'avons pu éliminer</h2>
+<ul>
+<li><b>Les bons de travail internes sont impossibles à distinguer des requêtes citoyennes.</b> La Ville : <em>« Certains arrondissements utilisent également la plateforme pour assigner des tâches internes… Le système ne permet pas de distinguer »</em>. Ils sont créés <em>par</em> l'unité qui les exécute, ce qui <b>gonfle la règle géométrique en notre faveur</b>. Impossible à quantifier.</li>
+<li><b>Tautologie possible.</b> Si <code>UNITE_RESP_PARENT</code> est attribué automatiquement à partir de la coordonnée, l'affirmation « la géométrie prédit l'unité » ne fait que reformuler en partie cette règle. Les exceptions liées aux services partagés prouvent qu'elle n'est pas <em>purement</em> géométrique, mais nous n'avons pu l'écarter.</li>
+<li><b>La vérité terrain se limite au point d'arrivée.</b> Les réacheminements sont invisibles; nous reproduisons l'endroit où une requête a abouti, pas les décisions prises en cours de route.</li>
+</ul>
+
+<h2><span class="n">5</span>Carnet de recettes d'API</h2>
+<pre>Base:  https://donnees.montreal.ca/api/3/action
+SQL:   GET /datastore_search_sql?sql=&lt;urlencoded&gt;
+Fields: GET /datastore_search?resource_id=&lt;id&gt;&amp;limit=1   ← the real column names</pre>
+<table>
+<thead><tr><th>Ressource</th><th>ID</th></tr></thead>
+<tbody>
+<tr><td>Requêtes 311 (2022 → aujourd'hui)</td><td><code>2cfa0e06-9be4-49a6-b7f1-ee9f2363a872</code></td></tr>
+<tr><td>Voirie — chaussée agrégée (C22)</td><td><code>b1519f66-b48d-4ab6-a79b-1830c6307775</code></td></tr>
+<tr><td>Voirie — liste de valeurs (dictionnaire)</td><td><code>d277acf9-2c0c-4eaf-9e02-8c03eef690ce</code></td></tr>
+</tbody>
+</table>
+<p><b>Pièges, tous rencontrés pour de vrai :</b></p>
+<ul>
+<li>Les chemins <code>/download/</code> redirigent (302) vers Google Storage; dans un shell en bac à sable, la redirection inter-hôtes renvoie <code>RBAC: access denied</code> (19 octets). L'<b>API</b> fonctionne très bien; seuls les téléchargements de fichiers en bloc sont touchés.</li>
+<li>La <em>page</em> du jeu de données n'est pas récupérable par curl (délai dépassé). Le texte méthodologique exige une requête avec rendu — il ne se trouve pas dans l'API.</li>
+<li><code>COUNT(*) FILTER (WHERE …)</code> ne renvoie silencieusement rien sur certaines requêtes du datastore. Utilisez <code>SUM(CASE WHEN … THEN 1 ELSE 0 END)</code> ou des requêtes distinctes.</li>
+<li>La colonne est <code>PROPRIETAIRE_REF</code>, pas <code>PROPRIETAIRE</code>. Les noms des groupes d'attributs du dictionnaire sont littéralement les noms des colonnes.</li>
+<li>Paginez les requêtes groupées — le datastore plafonne le nombre de lignes par réponse.</li>
+</ul>
+
+<h2><span class="n">6</span>Ce qui reste à vérifier</h2>
+<p>Ne présentez aucun de ces éléments comme un fait sans l'avoir d'abord vérifié.</p>
+<ul>
+<li><b>Règlement 02-003</b> — texte intégral : nous n'avons que la paraphrase de la Ville dans les métadonnées de la RAAV. → Service du greffe.</li>
+<li><b>Banque d'information 311</b> — désormais restreinte au réseau privé virtuel (403). Notre reconstruction de la taxonomie n'en est qu'un substitut. → demander l'accès à titre de participant.</li>
+<li><b>Les 33 tronçons <code>ARTERE=1</code> de la RAAV situés dans des villes liées</b> — repérés au moyen du GPKG, non retéléchargeable pour confirmation. Concorde avec un constat 311 indépendant, donc probablement exact.</li>
+<li><b>PJCCI / CA25 / SSL comme exploitants RTSS</b> — un premier passage les a trouvés; un échantillon ultérieur n'a renvoyé que MTQ. Ni infirmé, ni échantillonné.</li>
+<li><b>La zone <code>AREQ</code></b> dans le KMZ des poteaux d'Hydro-Québec — gestionnaire vide, aucune légende. Peut-être le réseau souterrain de la CSEM. <b>Non confirmé.</b></li>
+<li><b>L'état en 2026 du contrat d'abribus de Québecor</b> — les sources sont les annonces de 2012–13 (en vigueur jusqu'en 2032).</li>
+<li><b>Les données ouvertes d'HQ sont sous licence CC-BY-NC</b> — une contrainte réelle en cas de commercialisation.</li>
+</ul>
+
+<h2><span class="n">7</span>La leçon de méthode</h2>
+<p>Trois de nos quatre pires erreurs ont la même forme : <b>nous avons fait confiance à un schéma, à un chiffre qui faisait notre affaire ou à un nom de colonne plausible au lieu de regarder la distribution.</b></p>
+<ul>
+<li>Le dictionnaire autorisait MTQ → nous avons supposé que MTQ figurait dans les données.</li>
+<li>Une colonne nommée <code>ARRONDISSEMENT</code> → nous avons supposé qu'elle signifiait « où ça se trouve ».</li>
+<li>Une valeur <code>1</code> dans <code>PROVENANCE_TELEPHONE</code> → nous avons supposé un booléen.</li>
+</ul>
+<p>La quatrième est l'image miroir : nous avons <b>refusé de croire un constat exact</b> (la règle d'obfuscation) parce que notre propre raisonnement sur les coordonnées paraissait solide. Il était solide et faux.</p>
+<div class="callout c-find"><span class="lbl">La règle unique</span>Regardez les valeurs. Toujours. Le schéma est une affirmation, pas une preuve.</div>
+
+<div class="foot">Complément à <a href="proposal.fr.html">proposal.html</a> · chiffres de référence dans <code>SUBMISSION_NUMBERS.md</code> · reproduire au moyen de <code>shadow/montreal-challenge-verify.mjs</code>. Source : Requêtes 311 (donnees.montreal.ca, CC-BY 4.0 · © Ville de Montréal).</div>
+</div>
+</body>
+</html>
