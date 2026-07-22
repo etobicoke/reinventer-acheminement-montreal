@@ -44,6 +44,6 @@ A prediction is a deterministic function of this frozen table and a request's ca
 <div class="callout warn"><span class="lbl">What this scorecard does not claim</span>
 It does <b>not</b> claim to predict a routing before the City makes it — the 311 open data publishes each request already routed. The claim is narrower and checkable: a provably-not-retrofitted policy, independently recomputable, that keeps reproducing the City's own routing on requests it never saw. It scores the routing resolver only, not photo/voice perception.</div>
 <h2>Reproduce it</h2>
-<p><code>node scripts/research/montreal-shadow/shadow-run.mjs --as-of 2026-07-22</code> — pulls the live City API, re-derives every figure, and fails loudly if the committed policy hash no longer matches its own rules.</p>
-<div class="foot">Source: Requêtes 311 (donnees.montreal.ca, CC-BY 4.0). Ledger: <code>scripts/research/montreal-shadow/predictions/</code>. This page is regenerated from <code>scorecard.json</code> on every run — do not hand-edit.</div>
+<p><code>node shadow/shadow-run.mjs --as-of 2026-07-22</code> — pulls the live City API, re-derives every figure, and fails loudly if the committed policy hash no longer matches its own rules.</p>
+<div class="foot">Source: Requêtes 311 (donnees.montreal.ca, CC-BY 4.0). Ledger: <code>shadow/predictions/</code>. This page is regenerated from <code>scorecard.json</code> on every run — do not hand-edit.</div>
 </div></body></html>

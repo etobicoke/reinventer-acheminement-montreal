@@ -2,8 +2,8 @@
 // Montréal AI Challenge (ALL IN 2026) — reproduction & verification harness.
 //
 // Re-derives EVERY quantitative claim in:
-//   project-docs/montreal/proposal.md  (+ proposal.html)
-//   project-docs/montreal/findings.md
+//   proposal.md  (+ proposal.html)
+//   findings.md
 // directly from the City of Montréal's live open-data API, and reports
 // PASS / DRIFT / FAIL against the values documented on 2026-07-15.
 //
@@ -23,9 +23,9 @@
 // datastore exposes SQL, so no client library earns its place here.
 //
 // Usage:
-//   node scripts/research/montreal-challenge-verify.mjs           # all checks
-//   node scripts/research/montreal-challenge-verify.mjs --quick   # skip the 1.5M-row eval
-//   node scripts/research/montreal-challenge-verify.mjs --json    # machine-readable
+//   node shadow/montreal-challenge-verify.mjs           # all checks
+//   node shadow/montreal-challenge-verify.mjs --quick   # skip the 1.5M-row eval
+//   node shadow/montreal-challenge-verify.mjs --json    # machine-readable
 
 const API = "https://donnees.montreal.ca/api/3/action";
 
@@ -336,7 +336,7 @@ async function sharedServices() {
 
 (async () => {
   log("\x1b[1m\x1b[35mMontréal AI Challenge — reproduction harness\x1b[0m");
-  log("\x1b[2mVerifying project-docs/montreal/proposal.md against the live City of Montréal open-data API.");
+  log("\x1b[2mVerifying proposal.md against the live City of Montréal open-data API.");
   log("Documented values were measured 2026-07-15. DRIFT on counts is expected — the dataset grows daily.\x1b[0m");
 
   try {

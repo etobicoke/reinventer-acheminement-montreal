@@ -3,7 +3,7 @@
 **A frozen routing policy, scored every day against the City of Montréal's own
 decisions — in the open, reproducible by anyone.**
 
-📊 **Live scorecard:** `https://<you>.github.io/<repo>/` — regenerated daily _(set this up via [PUBLISH.md](PUBLISH.md))_
+📊 **Live scorecard:** <https://etobicoke.github.io/reinventer-acheminement-montreal/shadow/scorecard.html> — regenerated daily.
 
 This repository is the routing half of Olotalk's submission to the **ALL IN 2026 AI
 Challenge** (City of Montréal). The submission's thesis: routing a citizen report —
@@ -71,10 +71,8 @@ numbers against the same City API today; this repo proves them **going forward**
 ## How it stays live
 
 `.github/workflows/shadow.yml` runs `shadow-run.mjs` on a daily cron and commits the
-new ledger entry + regenerated scorecard back to the repo — no babysitting. Stand it
-up with **[PUBLISH.md](PUBLISH.md)** (extract → push to a public repo → enable Pages
-+ Actions write → run once). Manual runs: Actions tab → *shadow-run* → *Run
-workflow*, or `node shadow-run.mjs` locally.
+new ledger entry + regenerated scorecard back to the repo — no babysitting. Manual
+runs: Actions tab → *shadow-run* → *Run workflow*, or `node shadow-run.mjs` locally.
 
 ## Files
 
@@ -86,6 +84,5 @@ workflow*, or `node shadow-run.mjs` locally.
 | `scorecard.html` / `index.html` | the jury-facing page (identical; `index.html` is the Pages entry point) |
 | `scorecard.json` | machine-readable scorecard |
 | `.github/workflows/shadow.yml` | the daily automation |
-| `extract.sh` · `PUBLISH.md` | stand up the public repo |
 
 Data: Requêtes 311 (`donnees.montreal.ca`, CC-BY 4.0 · © Ville de Montréal). Code: MIT.

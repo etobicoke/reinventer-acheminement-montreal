@@ -2,10 +2,9 @@
 
 **Companion to `proposal.md` · 2026-07-15**
 
-The proposal is a pitch: selective by design. This is the other half — **what cost
-us the most to learn and appears nowhere in the pitch**, because negative results
-don't sell but they do save the next person (including us in September) from
-rediscovering them.
+The proposal necessarily leads with what works. This is the other half — **what cost
+us the most to learn and appears nowhere in the pitch** — the complete record, kept so
+the next person (including us in September) doesn't rediscover it.
 
 Read this before touching Montréal's open data again.
 

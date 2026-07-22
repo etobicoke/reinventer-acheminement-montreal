@@ -44,6 +44,6 @@ Une prédiction est une fonction déterministe de cette table figée et de la ca
 <div class="callout warn"><span class="lbl">Ce que ce tableau ne prétend pas</span>
 Il ne prétend <b>pas</b> prédire un acheminement avant que la Ville ne le fasse — les données ouvertes 311 publient chaque requête déjà acheminée. La revendication est plus étroite et vérifiable : une politique non ajustée après coup, recalculable de façon indépendante, qui continue de reproduire l'acheminement de la Ville sur des requêtes qu'elle n'a jamais vues. Elle note uniquement le moteur d'acheminement, pas la perception photo/voix.</div>
 <h2>Reproduisez-le</h2>
-<p><code>node scripts/research/montreal-shadow/shadow-run.mjs --as-of 2026-07-22</code> — interroge l'API en direct de la Ville, redérive chaque chiffre, et échoue bruyamment si l'empreinte de la politique consignée ne correspond plus à ses règles.</p>
-<div class="foot">Source : Requêtes 311 (donnees.montreal.ca, CC-BY 4.0). Journal : <code>scripts/research/montreal-shadow/predictions/</code>. Cette page est régénérée à partir de <code>scorecard.json</code> à chaque exécution — ne pas modifier à la main.</div>
+<p><code>node shadow/shadow-run.mjs --as-of 2026-07-22</code> — interroge l'API en direct de la Ville, redérive chaque chiffre, et échoue bruyamment si l'empreinte de la politique consignée ne correspond plus à ses règles.</p>
+<div class="foot">Source : Requêtes 311 (donnees.montreal.ca, CC-BY 4.0). Journal : <code>shadow/predictions/</code>. Cette page est régénérée à partir de <code>scorecard.json</code> à chaque exécution — ne pas modifier à la main.</div>
 </div></body></html>

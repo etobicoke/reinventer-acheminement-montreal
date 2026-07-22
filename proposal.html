@@ -129,7 +129,7 @@
   <header class="doc">
     <div class="eyebrow"><span style="color:var(--mtl-red)">&#9884;</span> Proposal · technical approach · ALL IN 2026 × Ville de Montréal</div>
     <h1>AI Challenge: Reinventing the Citizen Experience</h1>
-    <div class="meta"><b>Draft 2026-07-15</b> · Submission deadline <b>2026-07-24</b> · Olotalk · Every figure below is computed from the City's own open data (Requêtes 311, CC-BY 4.0, 3,034,731 requests) — none is an estimate · Headline validated <b>out of sample</b> · Reproduction script accompanies this document</div>
+    <div class="meta"><b>2026-07-15</b> · Olotalk · Every figure below is computed from the City's own open data (Requêtes 311, CC-BY 4.0, 3,034,731 requests) — none is an estimate · Headline validated <b>out of sample</b> · Reproduction script accompanies this document</div>
   </header>
 
   <div class="callout c-find">
@@ -463,18 +463,18 @@
 
   <figure class="chart">
     <h4>82% of every 311 request still arrives by telephone</h4>
-    <div class="csub">Share of 3.07M requests by intake channel · City of Montréal 311 open data</div>
+    <div class="csub">Share of 3.03M requests by intake channel · City of Montréal 311 open data</div>
     <svg viewBox="0 0 700 178" width="100%" role="img" aria-label="311 channel mix — 82% by telephone" style="max-width:100%"><rect x="140" y="6" width="470.0" height="20" rx="3" fill="var(--accent)"/><text x="132" y="16.5" text-anchor="end" dominant-baseline="middle" font-size="12" fill="var(--muted)" font-family="-apple-system,sans-serif">By telephone</text><text x="617.0" y="16.5" dominant-baseline="middle" font-size="12" font-weight="700" fill="var(--accent)" font-family="var(--mono),monospace" style="font-variant-numeric:tabular-nums">82.0%</text><rect x="140" y="40" width="32.7" height="20" rx="3" fill="#ccccd8"/><text x="132" y="50.5" text-anchor="end" dominant-baseline="middle" font-size="12" fill="var(--muted)" font-family="-apple-system,sans-serif">In person</text><text x="179.7" y="50.5" dominant-baseline="middle" font-size="12" font-weight="400" fill="var(--muted)" font-family="var(--mono),monospace" style="font-variant-numeric:tabular-nums">5.7%</text><rect x="140" y="74" width="30.4" height="20" rx="3" fill="#ccccd8"/><text x="132" y="84.5" text-anchor="end" dominant-baseline="middle" font-size="12" fill="var(--muted)" font-family="-apple-system,sans-serif">Mobile app</text><text x="177.4" y="84.5" dominant-baseline="middle" font-size="12" font-weight="400" fill="var(--muted)" font-family="var(--mono),monospace" style="font-variant-numeric:tabular-nums">5.3%</text><rect x="140" y="108" width="21.2" height="20" rx="3" fill="#ccccd8"/><text x="132" y="118.5" text-anchor="end" dominant-baseline="middle" font-size="12" fill="var(--muted)" font-family="-apple-system,sans-serif">Email</text><text x="168.2" y="118.5" dominant-baseline="middle" font-size="12" font-weight="400" fill="var(--muted)" font-family="var(--mono),monospace" style="font-variant-numeric:tabular-nums">3.7%</text><rect x="140" y="142" width="17.2" height="20" rx="3" fill="#ccccd8"/><text x="132" y="152.5" text-anchor="end" dominant-baseline="middle" font-size="12" fill="var(--muted)" font-family="-apple-system,sans-serif">Web form</text><text x="164.2" y="152.5" dominant-baseline="middle" font-size="12" font-weight="400" fill="var(--muted)" font-family="var(--mono),monospace" style="font-variant-numeric:tabular-nums">3.0%</text></svg>
     <figcaption>The City's routing is already accurate — that accuracy just <b>costs a phone call</b>, millions of times a year. Digital intake is a rounding error. Every report that arrives already resolved returns agent minutes to the callers who genuinely need a human.</figcaption>
   </figure>
 
   <p>We reproduce that accuracy at zero marginal cost per request, and deliver a work order already resolved to an asset, already grouped with the other requests naming that same asset, already prioritised by how many separate citizens raised it, and already rejected-with-an-explanation when it belongs to the MTQ, a ville liée, Bell, Québecor, or a private owner.</p>
 
-  <p class="hero">Montréal's own agents already do this well. They should not have to do it 2.5 million times a year by phone.</p>
+  <p class="hero">Montréal's own agents already do this well. They should not have to do it 2.5 million times by phone.</p>
 
   <div class="foot">
     <b>Sources.</b> Requêtes 311 (CC-BY 4.0) · Base de données des actifs de voirie · Géobase · Réseau artériel administratif (RAAV) · Limites administratives de l'agglomération · MTQ Réseau routier — RTSS (CC-BY 4.0) · Hydro-Québec Parcs de poteaux (CC-BY-NC) · montreal.ca<br>
-    <b>Reproduction.</b> <code>node scripts/research/montreal-challenge-verify.mjs</code> re-derives every figure above from the live CKAN API and reports PASS/DRIFT/FAIL against the values measured 2026-07-15. It completes in <b>~23 seconds</b> and is dependency-free: the aggregation runs <em>server-side in the City's own datastore</em> (a <code>GROUP BY</code> collapses the 1,529,458 evaluated requests into 11,833 counted cells — lossless for this question), so nothing here depends on our copy of the data. Anyone, including the City, can check our arithmetic against the source of record. Markdown source: <code>proposal.md</code>; field notes and dead ends: <code>findings.html</code>.
+    <b>Reproduction.</b> <code>node shadow/montreal-challenge-verify.mjs</code> re-derives every figure above from the live CKAN API and reports PASS/DRIFT/FAIL against the values measured 2026-07-15. It completes in <b>~23 seconds</b> and is dependency-free: the aggregation runs <em>server-side in the City's own datastore</em> (a <code>GROUP BY</code> collapses the 1,529,458 evaluated requests into 11,833 counted cells — lossless for this question), so nothing here depends on our copy of the data. Anyone, including the City, can check our arithmetic against the source of record. Markdown source: <code>proposal.md</code>; field notes and dead ends: <code>findings.html</code>.
   </div>
 
 </div>

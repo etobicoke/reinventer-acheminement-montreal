@@ -1,7 +1,7 @@
 # AI Challenge: Reinventing the Citizen Experience — Technical Approach
 
 **Olotalk · ALL IN 2026 · City of Montréal**
-Draft — 2026-07-15. Submission deadline 2026-07-24.
+2026-07-15.
 
 ---
 
@@ -363,4 +363,4 @@ rejected-with-an-explanation when it belongs to the MTQ, a ville liée, Bell,
 Québecor, or a private owner.
 
 Montréal's own agents already do this well. They should not have to do it 2.5
-million times a year by phone.
+million times by phone.

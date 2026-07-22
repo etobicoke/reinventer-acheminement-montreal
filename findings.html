@@ -43,11 +43,11 @@ body{border-top:3px solid var(--mtl-red)}</style>
 <header class="doc">
 <div class="eyebrow"><span style="color:var(--mtl-red)">&#9884;</span> Companion to the proposal · field notes · what the pitch omits</div>
 <h1>Montréal open data — field notes, dead ends, and traps</h1>
-<div class="meta">Companion to <a href="proposal.html">proposal.html</a> · <b>2026-07-15</b> · the other half of the work: what cost the most to learn and appears nowhere in the pitch, so the next person doesn't rediscover it. Everything here is re-derivable via <code>scripts/research/montreal-challenge-verify.mjs</code>.</div>
+<div class="meta">Companion to <a href="proposal.html">proposal.html</a> · <b>2026-07-15</b> · the other half of the work: what cost the most to learn and appears nowhere in the pitch, so the next person doesn't rediscover it. Everything here is re-derivable via <code>shadow/montreal-challenge-verify.mjs</code>.</div>
 </header>
 
 <div class="callout c-find"><span class="lbl">Why this document exists</span>
-The proposal is a pitch — selective by design. Negative results don't sell, but they do save the next person (including us in September) from walking into the same walls. Read this before touching Montréal's open data again.</div>
+The proposal necessarily leads with what works; this is the complete record — including what didn't, so the next person (including us in September) doesn't walk into the same walls. Read this before touching Montréal's open data again.</div>
 
 <h2><span class="n">1</span>Fields that do not mean what they are named</h2>
 <p>This is the whole document in one table. Every row cost us at least one wrong conclusion.</p>
@@ -55,12 +55,12 @@ The proposal is a pitch — selective by design. Negative results don't sell, bu
 <thead><tr><th>Field / dataset</th><th>Looks like</th><th>Actually is</th></tr></thead>
 <tbody>
 <tr><td><code>PROPRIETAIRE_REF</code> (voirie assets)</td><td>The asset's <b>owner</b>. Its dictionary permits <code>Ministère Transport Québec</code>, <code>Société Transport Montréal</code>, <code>Privé</code>.</td><td><b>The territory the asset sits in.</b> Those values appear on ~7 of 16,750 chaussée rows. <b>Autoroutes are attributed to boroughs</b> (Saint-Laurent ×121, Sud-Ouest ×68). Frozen at 2020-05-30. Useless for jurisdiction — actively dangerous.</td></tr>
-<tr><td><code>LOC_ERREUR_GDT</code></td><td>A location-<b>error</b> flag.</td><td><em>« Information sur la précision du positionnement avant l'obfuscation »</em> — <code>0</code> = located at the issue; <b><code>1</code> = located at the borough's BAM service counter.</b> Not an error; a "filed in person" marker. 62,453 rows.</td></tr>
+<tr><td><code>LOC_ERREUR_GDT</code></td><td>A location-<b>error</b> flag.</td><td><em>« Information sur la précision du positionnement avant l'obfuscation »</em> — <code>0</code> = located at the issue; <b><code>1</code> = located at the borough's BAM service counter.</b> Not an error; a "filed in person" marker. 62,008 rows.</td></tr>
 <tr><td><code>ARRONDISSEMENT</code></td><td>Where the issue is.</td><td><em>« Arrondissement attitré pour régler la requête »</em> — <b>the borough assigned to fix it.</b> Can never name a ville liée, because Montréal never assigns work to one.</td></tr>
 <tr><td><code>ARRONDISSEMENT_GEO</code></td><td>A near-duplicate of the above.</td><td><em>« Arrondissement (géographiquement parlant) »</em> — <b>the geographic one.</b> This is the column for any "where did it originate" question.</td></tr>
 <tr><td><code>PROVENANCE_TELEPHONE</code></td><td>A boolean: "arrived by phone."</td><td><em>« Nombre de requérants différents via téléphone »</em> — <b>a count of distinct requesters</b>, 0…14+. 200k+ requests have more than one. For channel share, use <code>PROVENANCE_ORIGINALE</code>.</td></tr>
 <tr><td><code>geobase-gestion-troncon</code></td><td>Road-segment <b>management</b> → jurisdiction.</td><td>An <b>update changelog</b> (segment IDs, dates, operation types). States: <em>« ne contient pas de l'information géospatiale »</em>.</td></tr>
-<tr><td><code>ACTI_NOM</code></td><td>The live taxonomy: ~993 categories.</td><td>~993 <b>all-time strings</b>, of which <b>279 are retired</b> with a leading <code>*</code> (<code>*Réclamation</code> → <code>Réclamation</code>, a clean rename), plus ~23 dup pairs. <b>~520 live on 2026 requests.</b></td></tr>
+<tr><td><code>ACTI_NOM</code></td><td>The live taxonomy: ~993 categories.</td><td>~993 <b>all-time strings</b>, of which <b>252 are retired</b> with a leading <code>*</code> (<code>*Réclamation</code> → <code>Réclamation</code>, a clean rename), plus ~23 dup pairs. <b>513 live on 2026 requests.</b></td></tr>
 <tr><td><code>TYPE_LIEU_INTERV</code> null on 1.39M rows</td><td>A gap the City can't fill.</td><td><em>« les demandes d'information ne sont pas géoréférencées »</em>. The nulls are the <code>Information</code> rows. <b>On service requests it is populated on all but 7 of 1.6M.</b></td></tr>
 </tbody>
 </table>
@@ -72,7 +72,7 @@ The proposal is a pitch — selective by design. Negative results don't sell, bu
 <div class="callout c-warn"><span class="lbl">Lesson</span>A shocking number from a string comparison is a string bug until proven otherwise.</div>
 
 <h3>The circular zero</h3>
-<p>Filtering pothole requests to villes liées on <code>ARRONDISSEMENT</code> returns <b>0</b> — which looks like a finding ("citizens never misreport across the boundary") and is actually a restatement of the column's definition. The right column, <code>ARRONDISSEMENT_GEO</code>, returns <b>312</b>: Mont-Royal 169, Westmount 91, and more. Westmount's most common 311 category is <code>Nid-de-poule</code>.</p>
+<p>Filtering pothole requests to villes liées on <code>ARRONDISSEMENT</code> returns <b>0</b> — which looks like a finding ("citizens never misreport across the boundary") and is actually a restatement of the column's definition. The right column, <code>ARRONDISSEMENT_GEO</code>, returns <b>311</b>: Mont-Royal 169, Westmount 91, and more. Westmount's most common 311 category is <code>Nid-de-poule</code>.</p>
 <div class="callout c-warn"><span class="lbl">Lesson</span>The correct number supported the argument <em>better</em> than the wrong one. Convenient findings deserve more scrutiny, not less.</div>
 
 <h3>The owner column that isn't</h3>
@@ -144,7 +144,7 @@ Fields: GET /datastore_search?resource_id=&lt;id&gt;&amp;limit=1   ← the real 
 <p>The fourth was the mirror image: we <b>disbelieved a correct finding</b> (the obfuscation rule) because our own reasoning about the coordinates looked sound. It was sound and wrong.</p>
 <div class="callout c-find"><span class="lbl">The one rule</span>Look at the values. Always. The schema is a claim, not evidence.</div>
 
-<div class="foot">Companion to <a href="proposal.html">proposal.html</a> · reproduce via <code>scripts/research/montreal-challenge-verify.mjs</code>. Source: Requêtes 311 (donnees.montreal.ca, CC-BY 4.0 · © Ville de Montréal).</div>
+<div class="foot">Companion to <a href="proposal.html">proposal.html</a> · reproduce via <code>shadow/montreal-challenge-verify.mjs</code>. Source: Requêtes 311 (donnees.montreal.ca, CC-BY 4.0 · © Ville de Montréal).</div>
 </div>
 </body>
 </html>

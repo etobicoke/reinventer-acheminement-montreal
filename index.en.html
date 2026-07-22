@@ -100,7 +100,7 @@ a.card:hover{border-color:var(--accent);transform:translateY(-1px)}
 <div class="cd">What the pitch omits: fields that don't mean what they're named, the dead ends we walked into, the obfuscation rule, and the API cookbook. The credibility receipt.</div>
 <div class="cp">findings.html</div></a>
 
-<a class="card" href="../../scripts/research/montreal-shadow/scorecard.en.html">
+<a class="card" href="shadow/scorecard.en.html">
 <div class="ct"><span class="ci">📊</span><span class="cn">Live routing scorecard</span><span class="badge b-live">live</span></div>
 <div class="cd">The frozen-policy shadow-run: 97.27% held-out, scored daily against the City's own decisions, with a hash-committed policy anyone can recompute.</div>
 <div class="cp">shadow/scorecard.html</div></a>
@@ -109,8 +109,8 @@ a.card:hover{border-color:var(--accent);transform:translateY(-1px)}
 
 <h2>Reproduce every number</h2>
 <div class="callout"><span class="lbl">Two dependency-free scripts (Node ≥ 18)</span>
-<p style="margin:4px 0"><code>node scripts/research/montreal-challenge-verify.mjs</code> — re-derives every proposal figure from the live City API and reports PASS / DRIFT / FAIL. ~23s, aggregation runs server-side in the City's datastore.</p>
-<p style="margin:4px 0"><code>node scripts/research/montreal-shadow/shadow-run.mjs</code> — regenerates the live scorecard against today's data.</p>
+<p style="margin:4px 0"><code>node shadow/montreal-challenge-verify.mjs</code> — re-derives every proposal figure from the live City API and reports PASS / DRIFT / FAIL. ~23s, aggregation runs server-side in the City's datastore.</p>
+<p style="margin:4px 0"><code>node shadow/shadow-run.mjs</code> — regenerates the live scorecard against today's data.</p>
 <p style="margin:8px 0 2px;font-size:13px;color:var(--muted)">The point of both: a juror checks our arithmetic against the source of record without trusting a word we wrote.</p></div>
 
 <div class="foot">

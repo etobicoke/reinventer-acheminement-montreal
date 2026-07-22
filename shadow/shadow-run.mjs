@@ -32,7 +32,7 @@
 //     perception layer is demonstrated separately.
 //
 // Dependency-free (Node ≥ 18). Reuses the same API + normalization as
-// scripts/research/montreal-challenge-verify.mjs; kept self-contained so this file
+// montreal-challenge-verify.mjs; kept self-contained so this file
 // stands on its own when a juror reads it.
 //
 // Usage:
@@ -275,8 +275,8 @@ ${fr ? "Une prédiction est une fonction déterministe de cette table figée et 
 <div class="callout warn"><span class="lbl">${fr ? "Ce que ce tableau ne prétend pas" : "What this scorecard does not claim"}</span>
 ${fr ? "Il ne prétend <b>pas</b> prédire un acheminement avant que la Ville ne le fasse — les données ouvertes 311 publient chaque requête déjà acheminée. La revendication est plus étroite et vérifiable : une politique non ajustée après coup, recalculable de façon indépendante, qui continue de reproduire l'acheminement de la Ville sur des requêtes qu'elle n'a jamais vues. Elle note uniquement le moteur d'acheminement, pas la perception photo/voix." : "It does <b>not</b> claim to predict a routing before the City makes it — the 311 open data publishes each request already routed. The claim is narrower and checkable: a provably-not-retrofitted policy, independently recomputable, that keeps reproducing the City's own routing on requests it never saw. It scores the routing resolver only, not photo/voice perception."}</div>
 <h2>${fr ? "Reproduisez-le" : "Reproduce it"}</h2>
-<p>${fr ? `<code>node scripts/research/montreal-shadow/shadow-run.mjs --as-of ${card.asOf}</code> — interroge l'API en direct de la Ville, redérive chaque chiffre, et échoue bruyamment si l'empreinte de la politique consignée ne correspond plus à ses règles.` : `<code>node scripts/research/montreal-shadow/shadow-run.mjs --as-of ${card.asOf}</code> — pulls the live City API, re-derives every figure, and fails loudly if the committed policy hash no longer matches its own rules.`}</p>
-<div class="foot">${fr ? "Source : Requêtes 311 (donnees.montreal.ca, CC-BY 4.0). Journal : <code>scripts/research/montreal-shadow/predictions/</code>. Cette page est régénérée à partir de <code>scorecard.json</code> à chaque exécution — ne pas modifier à la main." : "Source: Requêtes 311 (donnees.montreal.ca, CC-BY 4.0). Ledger: <code>scripts/research/montreal-shadow/predictions/</code>. This page is regenerated from <code>scorecard.json</code> on every run — do not hand-edit."}</div>
+<p>${fr ? `<code>node shadow/shadow-run.mjs --as-of ${card.asOf}</code> — interroge l'API en direct de la Ville, redérive chaque chiffre, et échoue bruyamment si l'empreinte de la politique consignée ne correspond plus à ses règles.` : `<code>node shadow/shadow-run.mjs --as-of ${card.asOf}</code> — pulls the live City API, re-derives every figure, and fails loudly if the committed policy hash no longer matches its own rules.`}</p>
+<div class="foot">${fr ? "Source : Requêtes 311 (donnees.montreal.ca, CC-BY 4.0). Journal : <code>shadow/predictions/</code>. Cette page est régénérée à partir de <code>scorecard.json</code> à chaque exécution — ne pas modifier à la main." : "Source: Requêtes 311 (donnees.montreal.ca, CC-BY 4.0). Ledger: <code>shadow/predictions/</code>. This page is regenerated from <code>scorecard.json</code> on every run — do not hand-edit."}</div>
 </div></body></html>\n`;
 }
 

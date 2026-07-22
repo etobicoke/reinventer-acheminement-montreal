@@ -43,11 +43,11 @@ body{border-top:3px solid var(--mtl-red)}</style>
 <header class="doc">
 <div class="eyebrow"><span style="color:var(--mtl-red)">&#9884;</span> Complément à la proposition · notes de terrain · ce que la présentation passe sous silence</div>
 <h1>Données ouvertes de Montréal — notes de terrain, impasses et pièges</h1>
-<div class="meta">Complément à <a href="proposal.fr.html">proposal.html</a> · <b>2026-07-15</b> · l'autre moitié du travail : ce qui a coûté le plus cher à apprendre et n'apparaît nulle part dans la présentation, afin que la prochaine personne n'ait pas à le redécouvrir. Tout ici est reproductible au moyen de <code>scripts/research/montreal-challenge-verify.mjs</code>.</div>
+<div class="meta">Complément à <a href="proposal.fr.html">proposal.html</a> · <b>2026-07-15</b> · l'autre moitié du travail : ce qui a coûté le plus cher à apprendre et n'apparaît nulle part dans la présentation, afin que la prochaine personne n'ait pas à le redécouvrir. Tout ici est reproductible au moyen de <code>shadow/montreal-challenge-verify.mjs</code>.</div>
 </header>
 
 <div class="callout c-find"><span class="lbl">Pourquoi ce document existe</span>
-La proposition est une présentation — sélective par nature. Les résultats négatifs ne se vendent pas, mais ils évitent à la prochaine personne (nous y compris en septembre) de foncer dans les mêmes murs. À lire avant de toucher de nouveau aux données ouvertes de Montréal.</div>
+La proposition met nécessairement de l'avant ce qui fonctionne; voici le dossier complet — y compris ce qui n'a pas fonctionné, afin que la prochaine personne (nous y compris en septembre) ne fonce pas dans les mêmes murs. À lire avant de toucher de nouveau aux données ouvertes de Montréal.</div>
 
 <h2><span class="n">1</span>Des champs qui ne veulent pas dire ce que leur nom indique</h2>
 <p>Voici tout le document résumé en un seul tableau. Chaque ligne nous a coûté au moins une conclusion erronée.</p>
@@ -55,12 +55,12 @@ La proposition est une présentation — sélective par nature. Les résultats n
 <thead><tr><th>Champ / jeu de données</th><th>Semble être</th><th>Est en réalité</th></tr></thead>
 <tbody>
 <tr><td><code>PROPRIETAIRE_REF</code> (actifs de voirie)</td><td>Le <b>propriétaire</b> de l'actif. Son dictionnaire autorise <code>Ministère Transport Québec</code>, <code>Société Transport Montréal</code>, <code>Privé</code>.</td><td><b>Le territoire où se trouve l'actif.</b> Ces valeurs n'apparaissent que sur ~7 des 16,750 lignes de chaussée. <b>Les autoroutes sont attribuées à des arrondissements</b> (Saint-Laurent ×121, Sud-Ouest ×68). Figé au 2020-05-30. Inutile pour la compétence — carrément dangereux.</td></tr>
-<tr><td><code>LOC_ERREUR_GDT</code></td><td>Un indicateur d'<b>erreur</b> de localisation.</td><td><em>« Information sur la précision du positionnement avant l'obfuscation »</em> — <code>0</code> = localisé au lieu du problème; <b><code>1</code> = localisé au comptoir de service BAM de l'arrondissement.</b> Pas une erreur; un marqueur « déposé en personne ». 62,453 lignes.</td></tr>
+<tr><td><code>LOC_ERREUR_GDT</code></td><td>Un indicateur d'<b>erreur</b> de localisation.</td><td><em>« Information sur la précision du positionnement avant l'obfuscation »</em> — <code>0</code> = localisé au lieu du problème; <b><code>1</code> = localisé au comptoir de service BAM de l'arrondissement.</b> Pas une erreur; un marqueur « déposé en personne ». 62,008 lignes.</td></tr>
 <tr><td><code>ARRONDISSEMENT</code></td><td>Où se trouve le problème.</td><td><em>« Arrondissement attitré pour régler la requête »</em> — <b>l'arrondissement chargé de la régler.</b> Ne peut jamais désigner une ville liée, puisque Montréal n'assigne jamais de travaux à l'une d'elles.</td></tr>
 <tr><td><code>ARRONDISSEMENT_GEO</code></td><td>Un quasi-doublon du précédent.</td><td><em>« Arrondissement (géographiquement parlant) »</em> — <b>celui d'un point de vue géographique.</b> C'est la colonne à utiliser pour toute question du type « d'où provient la requête ».</td></tr>
 <tr><td><code>PROVENANCE_TELEPHONE</code></td><td>Un booléen : « arrivé par téléphone ».</td><td><em>« Nombre de requérants différents via téléphone »</em> — <b>un décompte de requérants distincts</b>, 0…14+. 200k+ requêtes en comptent plus d'un. Pour la répartition par canal, utilisez <code>PROVENANCE_ORIGINALE</code>.</td></tr>
 <tr><td><code>geobase-gestion-troncon</code></td><td>La <b>gestion</b> des tronçons de route → compétence.</td><td>Un <b>journal des modifications</b> (identifiants de tronçons, dates, types d'opérations). Précise : <em>« ne contient pas de l'information géospatiale »</em>.</td></tr>
-<tr><td><code>ACTI_NOM</code></td><td>La taxonomie en vigueur : ~993 catégories.</td><td>~993 <b>chaînes cumulées depuis toujours</b>, dont <b>279 sont désuètes</b> et précédées d'un <code>*</code> (<code>*Réclamation</code> → <code>Réclamation</code>, un simple renommage), plus ~23 paires de doublons. <b>~520 sont actives sur les requêtes de 2026.</b></td></tr>
+<tr><td><code>ACTI_NOM</code></td><td>La taxonomie en vigueur : ~993 catégories.</td><td>~993 <b>chaînes cumulées depuis toujours</b>, dont <b>252 sont désuètes</b> et précédées d'un <code>*</code> (<code>*Réclamation</code> → <code>Réclamation</code>, un simple renommage), plus ~23 paires de doublons. <b>513 sont actives sur les requêtes de 2026.</b></td></tr>
 <tr><td><code>TYPE_LIEU_INTERV</code> nul sur 1.39M lignes</td><td>Une lacune que la Ville ne peut combler.</td><td><em>« les demandes d'information ne sont pas géoréférencées »</em>. Les valeurs nulles correspondent aux lignes <code>Information</code>. <b>Sur les requêtes de service, le champ est renseigné pour toutes sauf 7 sur 1.6M.</b></td></tr>
 </tbody>
 </table>
@@ -72,7 +72,7 @@ La proposition est une présentation — sélective par nature. Les résultats n
 <div class="callout c-warn"><span class="lbl">Leçon</span>Un chiffre stupéfiant issu d'une comparaison de chaînes est un bogue de chaîne jusqu'à preuve du contraire.</div>
 
 <h3>Le zéro circulaire</h3>
-<p>Filtrer les requêtes de nids-de-poule vers les villes liées au moyen d'<code>ARRONDISSEMENT</code> renvoie <b>0</b> — ce qui a l'air d'un constat (« les citoyens ne se trompent jamais de côté de la frontière ») alors qu'il ne fait que reformuler la définition de la colonne. La bonne colonne, <code>ARRONDISSEMENT_GEO</code>, renvoie <b>312</b> : Mont-Royal 169, Westmount 91, et plus encore. À Westmount, la catégorie 311 la plus fréquente est <code>Nid-de-poule</code>.</p>
+<p>Filtrer les requêtes de nids-de-poule vers les villes liées au moyen d'<code>ARRONDISSEMENT</code> renvoie <b>0</b> — ce qui a l'air d'un constat (« les citoyens ne se trompent jamais de côté de la frontière ») alors qu'il ne fait que reformuler la définition de la colonne. La bonne colonne, <code>ARRONDISSEMENT_GEO</code>, renvoie <b>311</b> : Mont-Royal 169, Westmount 91, et plus encore. À Westmount, la catégorie 311 la plus fréquente est <code>Nid-de-poule</code>.</p>
 <div class="callout c-warn"><span class="lbl">Leçon</span>Le bon chiffre appuyait l'argument <em>mieux</em> que le mauvais. Les constats qui font notre affaire méritent plus d'examen, pas moins.</div>
 
 <h3>La colonne de propriétaire qui n'en est pas une</h3>
@@ -144,7 +144,7 @@ Fields: GET /datastore_search?resource_id=&lt;id&gt;&amp;limit=1   ← the real 
 <p>La quatrième est l'image miroir : nous avons <b>refusé de croire un constat exact</b> (la règle d'obfuscation) parce que notre propre raisonnement sur les coordonnées paraissait solide. Il était solide et faux.</p>
 <div class="callout c-find"><span class="lbl">La règle unique</span>Regardez les valeurs. Toujours. Le schéma est une affirmation, pas une preuve.</div>
 
-<div class="foot">Complément à <a href="proposal.fr.html">proposal.html</a> · reproduire au moyen de <code>scripts/research/montreal-challenge-verify.mjs</code>. Source : Requêtes 311 (donnees.montreal.ca, CC-BY 4.0 · © Ville de Montréal).</div>
+<div class="foot">Complément à <a href="proposal.fr.html">proposal.html</a> · reproduire au moyen de <code>shadow/montreal-challenge-verify.mjs</code>. Source : Requêtes 311 (donnees.montreal.ca, CC-BY 4.0 · © Ville de Montréal).</div>
 </div>
 </body>
 </html>
