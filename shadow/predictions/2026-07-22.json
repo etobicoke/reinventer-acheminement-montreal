@@ -1,0 +1,17 @@
+{
+  "asOf": "2026-07-22",
+  "policyHash": "b1f8107035578539f3c3a9f81e2ec1d9365ec038ed409ab8fc1bf96ea915a1f1",
+  "freezeCutoff": "2025-01-01",
+  "prospectiveEpoch": "2026-07-21",
+  "heldOut": {
+    "evaluated": 585918,
+    "correct": 569918,
+    "accuracy": 0.9726924245372219
+  },
+  "prospective": {
+    "evaluated": 0,
+    "correct": 0,
+    "accuracy": null,
+    "cells": []
+  }
+}

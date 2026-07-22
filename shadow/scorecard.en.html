@@ -29,7 +29,7 @@ h2{font-size:16px;margin:32px 0 10px}p{margin:10px 0;font-size:14.5px}ul{margin:
 <div style="font-size:12.5px;color:var(--muted);margin-bottom:16px"><span style="font-weight:700;color:var(--text)">English</span> · <a href="scorecard.html">Français</a></div>
 <div class="eyebrow"><span style="color:var(--mtl-red)">&#9884;</span> Live scorecard · Montréal routing resolver · Olotalk</div>
 <h1>Routing shadow-run — a frozen policy, scored in the open</h1>
-<div class="meta">Scorecard generated <b>2026-07-21</b> · policy frozen <b>2026-07-21</b> on requests created before 2025-01-01 (2024 &amp; earlier) · every number below re-derivable from the live City API via <code>shadow-run.mjs</code></div>
+<div class="meta">Scorecard generated <b>2026-07-22</b> · policy frozen <b>2026-07-21</b> on requests created before 2025-01-01 (2024 &amp; earlier) · every number below re-derivable from the live City API via <code>shadow-run.mjs</code></div>
 <div class="hero"><div class="herofig">97.27%</div>
 <div class="herolab">of the City's routing reproduced by a <b>hash-frozen policy it was never fit on</b><br>held-out backtest · 569,918 / 585,918 requests created 2025-01-01 → 2026-07-21</div></div>
 <div class="grid">
@@ -44,6 +44,6 @@ A prediction is a deterministic function of this frozen table and a request's ca
 <div class="callout warn"><span class="lbl">What this scorecard does not claim</span>
 It does <b>not</b> claim to predict a routing before the City makes it — the 311 open data publishes each request already routed. The claim is narrower and checkable: a provably-not-retrofitted policy, independently recomputable, that keeps reproducing the City's own routing on requests it never saw. It scores the routing resolver only, not photo/voice perception.</div>
 <h2>Reproduce it</h2>
-<p><code>node scripts/research/montreal-shadow/shadow-run.mjs --as-of 2026-07-21</code> — pulls the live City API, re-derives every figure, and fails loudly if the committed policy hash no longer matches its own rules.</p>
+<p><code>node scripts/research/montreal-shadow/shadow-run.mjs --as-of 2026-07-22</code> — pulls the live City API, re-derives every figure, and fails loudly if the committed policy hash no longer matches its own rules.</p>
 <div class="foot">Source: Requêtes 311 (donnees.montreal.ca, CC-BY 4.0). Ledger: <code>scripts/research/montreal-shadow/predictions/</code>. This page is regenerated from <code>scorecard.json</code> on every run — do not hand-edit.</div>
 </div></body></html>

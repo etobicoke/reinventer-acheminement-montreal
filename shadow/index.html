@@ -29,7 +29,7 @@ h2{font-size:16px;margin:32px 0 10px}p{margin:10px 0;font-size:14.5px}ul{margin:
 <div style="font-size:12.5px;color:var(--muted);margin-bottom:16px"><a href="scorecard.en.html">English</a> · <span style="font-weight:700;color:var(--text)">Français</span></div>
 <div class="eyebrow"><span style="color:var(--mtl-red)">&#9884;</span> Tableau de bord en direct · moteur d'acheminement de Montréal · Olotalk</div>
 <h1>Shadow-run de l'acheminement — une politique figée, notée à découvert</h1>
-<div class="meta">Tableau généré le <b>2026-07-21</b> · politique figée le <b>2026-07-21</b> sur les requêtes créées avant 2025-01-01 (2024 et avant) · chaque chiffre ci-dessous est redérivable depuis l'API en direct de la Ville via <code>shadow-run.mjs</code></div>
+<div class="meta">Tableau généré le <b>2026-07-22</b> · politique figée le <b>2026-07-21</b> sur les requêtes créées avant 2025-01-01 (2024 et avant) · chaque chiffre ci-dessous est redérivable depuis l'API en direct de la Ville via <code>shadow-run.mjs</code></div>
 <div class="hero"><div class="herofig">97.27%</div>
 <div class="herolab">de l'acheminement de la Ville reproduit par une <b>politique à empreinte figée qu'elle n'a jamais servi à ajuster</b><br>rétro-test hors échantillon · 569,918 / 585,918 requêtes créées 2025-01-01 → 2026-07-21</div></div>
 <div class="grid">
@@ -44,6 +44,6 @@ Une prédiction est une fonction déterministe de cette table figée et de la ca
 <div class="callout warn"><span class="lbl">Ce que ce tableau ne prétend pas</span>
 Il ne prétend <b>pas</b> prédire un acheminement avant que la Ville ne le fasse — les données ouvertes 311 publient chaque requête déjà acheminée. La revendication est plus étroite et vérifiable : une politique non ajustée après coup, recalculable de façon indépendante, qui continue de reproduire l'acheminement de la Ville sur des requêtes qu'elle n'a jamais vues. Elle note uniquement le moteur d'acheminement, pas la perception photo/voix.</div>
 <h2>Reproduisez-le</h2>
-<p><code>node scripts/research/montreal-shadow/shadow-run.mjs --as-of 2026-07-21</code> — interroge l'API en direct de la Ville, redérive chaque chiffre, et échoue bruyamment si l'empreinte de la politique consignée ne correspond plus à ses règles.</p>
+<p><code>node scripts/research/montreal-shadow/shadow-run.mjs --as-of 2026-07-22</code> — interroge l'API en direct de la Ville, redérive chaque chiffre, et échoue bruyamment si l'empreinte de la politique consignée ne correspond plus à ses règles.</p>
 <div class="foot">Source : Requêtes 311 (donnees.montreal.ca, CC-BY 4.0). Journal : <code>scripts/research/montreal-shadow/predictions/</code>. Cette page est régénérée à partir de <code>scorecard.json</code> à chaque exécution — ne pas modifier à la main.</div>
 </div></body></html>
