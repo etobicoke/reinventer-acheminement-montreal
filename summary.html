@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Reinventing the routing, submission summary · Olochat AI Inc.</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--paper:#fbfbf8;--surface:#fff;--rule:#e3e1d9;--rule-soft:#eeece4;--ink:#191917;--muted:#5f5d57;--faint:#8a887f;
+--navy:#0d3b66;--navy-dim:#eaf0f6;--navy-bd:#c8d8e8;--mtl-red:#C8102E;--green:#1a7f43;--green-bg:#eef7f0;--green-bd:#c3e2cd;
+--serif:"Charter","Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+--sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+--mono:"SF Mono","JetBrains Mono",Menlo,Consolas,monospace}
+html{font-size:16px}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.62;border-top:3px solid var(--mtl-red)}
+.wrap{max-width:820px;margin:0 auto;padding:44px 30px 96px}
+.langtoggle{font-size:12.5px;color:var(--muted);margin-bottom:22px;font-variant:all-small-caps;letter-spacing:.04em}
+.langtoggle a{color:var(--navy);text-decoration:none}
+.masthead{border-bottom:2px solid var(--ink);padding-bottom:20px;margin-bottom:24px}
+.kicker{font-size:11.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--mtl-red);margin-bottom:12px}
+h1{font-family:var(--serif);font-weight:600;font-size:36px;line-height:1.1;letter-spacing:-.01em}
+.h1sub{font-family:var(--serif);font-style:italic;font-weight:400;font-size:19px;color:var(--muted);margin-top:8px}
+.dateline{font-size:12.5px;color:var(--faint);margin-top:14px;font-variant:all-small-caps;letter-spacing:.03em}
+.verify{border:1px solid var(--navy-bd);background:var(--navy-dim);border-radius:8px;padding:15px 20px;margin:22px 0;font-size:13.5px;color:#2f3e4d}
+.verify a{color:var(--navy);font-weight:600;text-decoration:none}
+.verify a:hover{text-decoration:underline}
+h2{font-family:var(--serif);font-weight:600;font-size:22px;color:var(--ink);margin:44px 0 8px;padding-bottom:8px;border-bottom:1px solid var(--rule)}
+.q{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--navy);margin:26px 0 6px}
+p{margin:11px 0;font-size:15px;line-height:1.62}
+p b{color:var(--ink)}
+a{color:var(--navy);word-break:break-word}
+code{font-family:var(--mono);font-size:.83em;background:#f2f1ea;padding:1px 5px;border-radius:3px}
+.foot{margin-top:44px;padding-top:18px;border-top:2px solid var(--ink);font-size:12.5px;color:var(--faint);line-height:1.55}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="langtoggle"><a href="soumission.html">Français</a> · <span style="font-weight:700;color:var(--ink)">English</span></div>
+<div class="masthead">
+<div class="kicker">⚜ AI Challenge · Reinventing the Citizen Experience · ALL IN 2026 × Ville de Montréal</div>
+<h1>Reinventing the routing</h1>
+<div class="h1sub">A summary of our submission. Resolve the asset, don't classify the photo.</div>
+<div class="dateline">Olochat AI Inc. · Olotalk municipal vertical · City of Montréal</div>
+</div>
+<div class="verify">Every figure below is computed from the City's open 311 data and is independently reproducible. Live site, demo, and daily scorecard: <a href="https://etobicoke.github.io/reinventer-acheminement-montreal/index.en.html">etobicoke.github.io/reinventer-acheminement-montreal</a>.</div>
+<h2>Proposed solution</h2>
+<p><b>Do you confirm that the proposed solution enables citizens to report an issue observed within the city…?</b> Yes</p>
+<div class="q">Detailed description of the proposed solution</div>
+<p>The citizen sends a photo, with an optional voice note or text in French or English. Our principle: don't classify the complaint, resolve the asset.</p>
+<p>Perception (AI): a vision model turns the photo into a structured observation, asset class, defect, location cues. The voice note is transcribed by a recognition model evaluated for Québécois French, then the audio is deleted. The category is retrieved semantically from the City's real 311 catalog, 500+ living categories, never invented by the model.</p>
+<p>Routing (deterministic): a geospatial resolver reconciles the Géobase, the arterial network (by-law 02-003), agglomeration boundaries, and the MTQ network, and renders one of three decisions: routed (responsible unit, with a cited provenance chain), redirected (MTQ, ville liée, or third party, with the correct reporting channel), or abstained to human triage when sources conflict. Duplicates group at the asset level. The model never names a department, so it can never name the wrong one.</p>
+<p>We validated the routing layer against four years of the City's own decisions before proposing anything: our policy reproduces the City's final routing on 97% of held-out requests. It now runs daily against the live 311 feed as a frozen, hash-committed policy, provably not retrofitted, and reproducible by your team, with a public, timestamped ledger updated every day at <a href="https://etobicoke.github.io/reinventer-acheminement-montreal/shadow/scorecard.en.html">https://etobicoke.github.io/reinventer-acheminement-montreal/shadow/scorecard.en.html</a>. Full technical memo, analysis, and open-source resolver: <a href="https://github.com/etobicoke/reinventer-acheminement-montreal">https://github.com/etobicoke/reinventer-acheminement-montreal</a>. The jurisdiction logic demonstrated on real Montréal cases: <a href="https://etobicoke.github.io/reinventer-acheminement-montreal/demo.html">https://etobicoke.github.io/reinventer-acheminement-montreal/demo.html</a>.</p>
+<div class="q">Use case in an urban context</div>
+<p>A resident photographs a pothole on a borough street and leaves a 15-second voice note in French. In seconds: the pothole resolves to a specific street segment, the category maps to the City's own classification, the request routes to the correct arrondissement, with a citable reason, and merges with prior reports naming the same asset. The resident receives a confirmation naming who is responsible.</p>
+<p>Same photo, 200 metres away on an arterial: routed to the central city, not the borough, per by-law 02-003. On an A-40 service road: "this belongs to the Ministère des Transports, dial 511," with the request logged as a referral instead of a dead end. In Mont-Royal: a one-second courteous redirect to that municipality's own reporting page. Our analysis of the City's data found tens of thousands of such out-of-scope requests per year, currently received and logged without an answer.</p>
+<p>Where the system cannot resolve responsibility, conflicting sources, a point far from any segment, it says so and hands the case to a human with the evidence attached.</p>
+<div class="q">Technology readiness level</div>
+<p>Functional prototype on live data. The underlying platform (Olotalk) is in private beta; the routing policy runs daily against Montréal's open 311 feed with published, timestamped validation (<a href="https://etobicoke.github.io/reinventer-acheminement-montreal/shadow/scorecard.en.html">https://etobicoke.github.io/reinventer-acheminement-montreal/shadow/scorecard.en.html</a>). Not yet deployed with a municipal customer, we claim measured results on the City's own data, reproducible by your team, rather than a logo.</p>
+<div class="q">Operational environment</div>
+<p>Designed to sit alongside, not replace, the City's 311 operation. Inputs: any intake channel the City chooses, mobile, web, or agent-assist on the existing phone line. Data: consumes the City's own authorities (Géobase, RAAV, administrative boundaries, 311 catalog) and the MTQ's live network service; adapts to any municipality by swapping data layers, not architecture. Outputs: standard work-order payloads with provenance, deliverable to the City's service-request system via API or export. Deployment ladder: dedicated Canadian-residency instance → inside the City's VPC → fully on-premises; the stack is a self-contained container bundle, self-hostable end to end, including vision, transcription, and embedding models, no mandatory foreign API on the request path.</p>
+<h2>Business model</h2>
+<div class="q">Concrete impacts for cities</div>
+<p>Measured, not estimated, from the City's own published data: 82% of Montréal's 3M+ 311 requests still arrive by telephone; the City's routing is excellent (we reproduce 97% of it out of sample), which means that accuracy is currently purchased with a phone call, millions of times a year. Every report arriving already resolved returns agent minutes to callers who genuinely need a human. Fewer crew roll-outs to assets the City does not own (provincial highways, villes liées, third-party poles). Asset-level duplicate grouping, "this segment has been reported four times this year", a maintenance signal the current per-request data cannot assemble. And a first-ever answer for the ~1.6% of traffic that belongs to someone else: a correct redirect instead of a logged dead end.</p>
+<div class="q">Cost model</div>
+<p>Annual subscription per municipality, tiered by population, covering the platform, data-layer maintenance (the jurisdiction reconciliation ages as source datasets update, keeping it current is the recurring value), and support. Implementation fee for initial deployment and integration. No per-request pricing: a reporting channel should not carry a marginal cost that discourages adoption. Self-hosted deployments carry the same subscription as a support-and-updates contract.</p>
+<div class="q">Competitive advantages</div>
+<p>(1) Asset resolution rather than complaint classification: the output is a resolved work order, object, responsible party, cited reason, or a correct redirect, a case 311 currently receives without being able to answer. (2) An assembled jurisdiction layer: the answer to "whose is it?" exists in no single City dataset, we verified this in the City's own data, including a column named "owner" that does not contain owners, so we built the reconciliation with field-level provenance, and the resolver and its policy are open-source and reproducible (<a href="https://github.com/etobicoke/reinventer-acheminement-montreal">https://github.com/etobicoke/reinventer-acheminement-montreal</a>). (3) Continuous public validation: the routing policy, frozen and hash-committed, is scored daily against the City's live 311 feed, every result written to a public timestamped ledger (<a href="https://etobicoke.github.io/reinventer-acheminement-montreal/shadow/scorecard.en.html">https://etobicoke.github.io/reinventer-acheminement-montreal/shadow/scorecard.en.html</a>). Each claim is verifiable by your team today, without taking our word for it.</p>
+<div class="q">User adoption</div>
+<p>Citizens: report in ten seconds, photo, optional voice or text, French or English, no category to choose, no form. Confirmation names the responsible party; when the issue belongs to another authority, the citizen gets the right door in one second instead of silence. No app download required (web-first intake).</p>
+<p>Municipal employees: nothing is imposed. The system runs in shadow mode first, alongside agents; every automated decision carries a citable reason an agent can inspect, and every uncertain case arrives at a human with evidence attached, not a black-box guess. Agents keep the judgment calls; the machine absorbs the lookup work. Adoption follows trust, and trust follows auditability, which is why auditability is the architecture, not a feature.</p>
+<div class="q">Environmental or social impact</div>
+<p>Measurable and mostly co-benefits of accuracy: fewer wasted crew roll-outs to assets outside City responsibility (fuel, vehicle-hours); earlier grouping of duplicate reports means defects repaired before they worsen (a pothole caught early is asphalt, not reconstruction). Socially: voice-first reporting in the citizen's own French lowers the barrier for residents who will not navigate a category dropdown , accessibility is the core UX, not an accommodation. And agent time returned to the phone line serves exactly the callers who most need a person: elderly residents, newcomers, people without smartphones. We commit to measuring these in pilot (baseline vs. shadow-mode comparison) rather than asserting them.</p>
+<div class="q">Impact on the Canadian ecosystem</div>
+<p>A Canadian company, Canadian infrastructure, and a stack that is self-hostable end to end, citizen photos, voice, and location can remain under Canadian jurisdiction on every request, at every deployment tier. This is our direct answer to the challenge's sovereign-security criterion: municipal citizen-reporting is civic infrastructure, and civic infrastructure should be auditable and operable by the public bodies it serves. We open-source the resolver, the routing policy, and our full analysis, improving the commons we drew from (<a href="https://github.com/etobicoke/reinventer-acheminement-montreal">https://github.com/etobicoke/reinventer-acheminement-montreal</a>). The approach, resolve the asset, cite the authority, abstain on conflict , transfers to every Canadian municipality by swapping data layers, and the methodology is public so others, including cities themselves, can verify or reuse it.</p>
+<h2>Team and support</h2>
+<div class="q">Team experience</div>
+<p>Led by our founder, a Principal Full Stack Developer with nearly twenty years across Canadian financial services, media, and the public sector, delivering bilingual (FR/EN) systems throughout. The proposed solution is the municipal vertical of Olotalk, our AI request-processing platform in private beta: multimodal intake, vision-model extraction, semantic retrieval over living catalogs, grounded generation with citation and refusal, self-hosted, including embeddings and vision. The team has prior hands-on experience fine-tuning speech-recognition models for low-resource language varieties, which is why robustness to spoken Québécois French is scoped as engineering with a known method, not a research risk. Before writing this application, we analyzed 3M+ of the City's published 311 requests and validated our routing approach out of sample against four years of the City's own decisions, the full analysis is public (<a href="https://github.com/etobicoke/reinventer-acheminement-montreal">https://github.com/etobicoke/reinventer-acheminement-montreal</a>).</p>
+<div class="q">Experience with cities, municipalities or public agencies (if applicable)</div>
+<p>Our founder has delivered production systems for public-sector and regulated organizations across nearly two decades in Canadian financial services, media, and government, bilingual (French and English) throughout. These were client engagements, building and integrating platforms for public and regulated bodies, not municipal deployments of this product: Olotalk has no municipal customer yet, and we state that plainly (see Technology readiness level). What that background brings to this project is fluency with public-sector delivery, namely the accessibility, bilingual, audit, and data-residency expectations a civic system must satisfy, which are designed into the architecture here rather than added late.</p>
+<div class="q">Support structure</div>
+<p>Bilingual (FR/EN) documentation, training, and support as standard, not add-ons. Onboarding: a structured shadow-mode pilot with weekly review of abstained and disputed cases alongside City staff, the review loop is also how the system's thresholds are tuned to the City's tolerance. Ongoing: versioned data-layer updates (the jurisdiction reconciliation is maintained as sources change), a public status page, defined SLAs, and full audit exports. For self-hosted deployments: deployment runbooks, upgrade support, and restore-tested backup procedures. Documentation and training materials delivered in French first.</p>
+<h2>Attendance at the event</h2>
+<p><b>Will you be available to present your solution in Montreal during ALL IN 2026 on September 16–17, 2026?</b> Yes</p>
+<div class="foot">Data: Requêtes 311 and the voirie / géobase / RAAV / RTSS datasets (<code>donnees.montreal.ca</code>, CC-BY 4.0 · © Ville de Montréal). Code and analysis open. Olochat AI Inc.</div>
+</div>
+</body>
+</html>
