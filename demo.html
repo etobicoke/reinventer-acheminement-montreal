@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Live demo · the deterministic resolver on real requests</title>
+<title>Live demo · the routing resolver on real requests</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--mtl-red:#C8102E;--bg:#fbfbf8;--surface:#fff;--border:#e3e1d9;--soft:#eeece4;--text:#1a1a2e;--muted:#6b6b80;
@@ -92,12 +92,12 @@ h1,h2{font-family:var(--serif);font-weight:600}
 <a class="back" href="index.en.html">← Montréal submission hub</a>
 <div class="langtoggle"><span class="cur">English</span> · <a href="demo.fr.html">Français</a></div>
 <header class="doc">
-<div class="eyebrow"><span style="color:var(--mtl-red)">&#9884;</span> Live demo · the deterministic resolver, on real requests</div>
+<div class="eyebrow"><span style="color:var(--mtl-red)">&#9884;</span> Live demo · the routing resolver, on real requests</div>
 <h1>How the resolver identifies the asset, routes it with a reason it can cite, and redirects anything that isn't Montréal's to fix.</h1>
-<div class="meta">Every location below is a real request from the City's 311 open data, and the routing shown is the resolver's, and it matches the City's own decision. The photo/voice step is the input; this page demonstrates the part that makes routing trustworthy: a deterministic, citable resolver that never guesses a department.</div>
+<div class="meta">Every location below is a real request from the City's 311 open data, and the routing shown is the resolver's, and it matches the City's own decision. The photo/voice step is the input; this page demonstrates the part that makes routing trustworthy: a citable resolver that never guesses a department.</div>
 </header>
 
-<p class="lead">A citizen sends a photo and a few words, spoken or typed: in Montréal, more than eight reports in ten still arrive by phone. Perception turns that into an <b>asset + defect</b>, and the voice is transcribed, then deleted. Then a deterministic resolver decides whose problem it is, and can always say why, or say "not ours."</p>
+<p class="lead">A citizen sends a photo and a few words, spoken or typed: in Montréal, more than eight reports in ten still arrive by phone. Perception turns that into an <b>asset + defect</b>, and the voice is transcribed, then deleted. Then a resolver decides whose problem it is, and can always say why, or say "not ours."</p>
 
 <div class="pipe">
 <div class="p ai"><div class="pn">01 · AI</div><div class="pt">Perceive</div><div class="pd">photo + voice → asset class + defect</div></div>
@@ -189,7 +189,7 @@ h1,h2{font-family:var(--serif);font-weight:600}
 </div>
 
 <div class="foot">
-<b>How real is this?</b> The three locations and streets are genuine 311 requests (or, for Mont-Royal, a real Town-of-Mount-Royal street), pulled live from <code>donnees.montreal.ca</code> (CC-BY 4.0 · © Ville de Montréal); the coordinates shown are approximate. The routing shown is the resolver's frozen policy (hash <code>b1f81070…</code>), and it matches the City's own recorded decisions. The perception step (photo → asset + defect) is shown as the input. In the product it runs a self-hosted vision model; here we demonstrate the deterministic resolver, the part that makes routing auditable. Reproduce the routing: <code>node shadow/shadow-run.mjs</code>. See also the <a href="index.en.html">submission hub</a> and the <a href="shadow/scorecard.en.html">live scorecard</a>.
+<b>How real is this?</b> The three locations and streets are genuine 311 requests (or, for Mont-Royal, a real Town-of-Mount-Royal street), pulled live from <code>donnees.montreal.ca</code> (CC-BY 4.0 · © Ville de Montréal); the coordinates shown are approximate. The routing shown is the resolver's frozen policy (hash <code>b1f81070…</code>), and it matches the City's own recorded decisions. The perception step (photo → asset + defect) is shown as the input. In the product it runs a self-hosted vision model; here we demonstrate the resolver, the part that makes routing auditable. Reproduce the routing: <code>node shadow/shadow-run.mjs</code>. See also the <a href="index.en.html">submission hub</a> and the <a href="shadow/scorecard.en.html">live scorecard</a>.
 </div>
 </div>
 <script>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Démo en direct · le moteur déterministe sur de vraies requêtes</title>
+<title>Démo en direct · le moteur d'acheminement sur de vraies requêtes</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--mtl-red:#C8102E;--bg:#fbfbf8;--surface:#fff;--border:#e3e1d9;--soft:#eeece4;--text:#1a1a2e;--muted:#6b6b80;
@@ -88,12 +88,12 @@ h1,h2{font-family:var(--serif);font-weight:600}
 <a class="back" href="index.html">← Pôle de la soumission (Montréal)</a>
 <div class="langtoggle"><a href="demo.html">English</a> · <span class="cur">Français</span></div>
 <header class="doc">
-<div class="eyebrow"><span style="color:var(--mtl-red)">&#9884;</span> Démo en direct · le moteur d'acheminement déterministe, sur de vraies requêtes</div>
+<div class="eyebrow"><span style="color:var(--mtl-red)">&#9884;</span> Démo en direct · le moteur d'acheminement, sur de vraies requêtes</div>
 <h1>Comment le moteur identifie l'actif, l'achemine avec une raison vérifiable, puis redirige ce qui ne relève pas de Montréal.</h1>
-<div class="meta">Chaque lieu ci-dessous provient d'une vraie requête des données ouvertes 311 de la Ville, et l'acheminement montré est celui du moteur, qui correspond à la décision réelle de la Ville. L'étape photo/voix est l'entrée; cette page démontre ce qui rend l'acheminement fiable : un moteur déterministe et justifiable qui ne devine jamais un service.</div>
+<div class="meta">Chaque lieu ci-dessous provient d'une vraie requête des données ouvertes 311 de la Ville, et l'acheminement montré est celui du moteur, qui correspond à la décision réelle de la Ville. L'étape photo/voix est l'entrée; cette page démontre ce qui rend l'acheminement fiable : un moteur justifiable qui ne devine jamais un service.</div>
 </header>
 
-<p class="lead">Un citoyen envoie une photo et quelques mots, dits ou tapés : à Montréal, plus de huit signalements sur dix arrivent encore par téléphone. La perception en tire un <b>actif + un défaut</b>, et la voix est transcrite puis supprimée. Puis un moteur déterministe décide à qui revient le problème, et il peut toujours en donner la raison, ou répondre « ce n'est pas à nous ».</p>
+<p class="lead">Un citoyen envoie une photo et quelques mots, dits ou tapés : à Montréal, plus de huit signalements sur dix arrivent encore par téléphone. La perception en tire un <b>actif + un défaut</b>, et la voix est transcrite puis supprimée. Puis un moteur décide à qui revient le problème, et il peut toujours en donner la raison, ou répondre « ce n'est pas à nous ».</p>
 
 <div class="pipe">
 <div class="p ai"><div class="pn">01 · IA</div><div class="pt">Percevoir</div><div class="pd">photo + voix → catégorie d'actif + défaut</div></div>
@@ -185,7 +185,7 @@ h1,h2{font-family:var(--serif);font-weight:600}
 </div>
 
 <div class="foot">
-<b>À quel point est-ce réel ?</b> Les trois lieux et rues sont de vraies requêtes 311 (ou, pour Mont-Royal, une vraie rue de Ville de Mont-Royal), extraits en direct de <code>donnees.montreal.ca</code> (CC-BY 4.0 · © Ville de Montréal); les coordonnées affichées sont approximatives. L'acheminement montré est celui de la politique figée du moteur (empreinte <code>b1f81070…</code>), et il correspond aux décisions réelles enregistrées par la Ville. L'étape de perception (photo → actif + défaut) est présentée comme l'entrée. Dans le produit, elle utilise un modèle de vision auto-hébergé; ici, nous démontrons le moteur déterministe, la partie qui rend l'acheminement vérifiable. Reproduire l'acheminement : <code>node shadow/shadow-run.mjs</code>. Voir aussi le <a href="index.html">pôle de la soumission</a> et le <a href="shadow/scorecard.html">tableau de bord en direct</a>.
+<b>À quel point est-ce réel ?</b> Les trois lieux et rues sont de vraies requêtes 311 (ou, pour Mont-Royal, une vraie rue de Ville de Mont-Royal), extraits en direct de <code>donnees.montreal.ca</code> (CC-BY 4.0 · © Ville de Montréal); les coordonnées affichées sont approximatives. L'acheminement montré est celui de la politique figée du moteur (empreinte <code>b1f81070…</code>), et il correspond aux décisions réelles enregistrées par la Ville. L'étape de perception (photo → actif + défaut) est présentée comme l'entrée. Dans le produit, elle utilise un modèle de vision auto-hébergé; ici, nous démontrons le moteur, la partie qui rend l'acheminement vérifiable. Reproduire l'acheminement : <code>node shadow/shadow-run.mjs</code>. Voir aussi le <a href="index.html">pôle de la soumission</a> et le <a href="shadow/scorecard.html">tableau de bord en direct</a>.
 </div>
 </div>
 <script>

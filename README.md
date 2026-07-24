@@ -23,7 +23,7 @@ Le **tableau de bord en direct** (l'acheminement noté chaque jour contre les d�
 réelles de la Ville) et les **scripts reproductibles** vivent dans le dossier `shadow/`.
 
 La thèse en une ligne : acheminer un signalement citoyen est **reproductible à ~97 %**
-par un moteur déterministe et justifiable : l'IA fait la perception, l'acheminement
+par un moteur justifiable, qui ne devine jamais : l'IA fait la perception, l'acheminement
 reste vérifiable et n'invente jamais de service.
 
 ---
@@ -46,7 +46,7 @@ The **live routing scorecard** and the **reproducible scripts** (`shadow-run.mjs
 is the tamper-evident ledger.
 
 The claim in one line: routing a citizen report is **~97% reproducible** with a
-deterministic, citable resolver, so the AI does perception, and routing stays auditable
+citable resolver that never guesses, so the AI does perception, and routing stays auditable
 and never hallucinates a department.
 
 ---
