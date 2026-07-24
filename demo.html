@@ -171,7 +171,7 @@ h1,h2{font-family:var(--serif);font-weight:600}
 <div class="scn try" id="try">
 <div class="scn-head"><span class="scn-tag">Scenario 4 · your turn</span><span class="scn-title">Try the engine yourself: the frozen policy, in your browser</span></div>
 <div class="try-body">
-<p style="margin-top:0">This page loads <code>shadow/policy.json</code> (the frozen decision table itself, the one whose hash is committed) and runs the same decision function as <code>shadow-run.mjs</code>: three lines, no model, no server. Pick a real 311 category and a borough; the engine routes it and states its reason.</p>
+<p style="margin-top:0">This page loads <code>shadow/policy.json</code> (the frozen decision table itself, the one whose hash is committed) and runs the same decision function as <code>shadow-run.mjs</code>: three lines, no model, no server. Pick a real 311 category and a borough; the engine routes it and states its reason. This test bench covers routing inside Montréal, its 19 boroughs; redirection outside Montréal (ville liée, MTQ) is illustrated in scenario 3.</p>
 <div class="try-controls">
 <label>311 category<input id="try-cat" list="try-cats" placeholder="e.g. Nid-de-poule" autocomplete="off"></label>
 <datalist id="try-cats"></datalist>
