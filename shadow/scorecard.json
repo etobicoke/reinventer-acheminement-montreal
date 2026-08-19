@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-08-18",
+  "asOf": "2026-08-19",
   "frozenAt": "2026-07-21",
   "freezeCutoff": "2025-01-01",
   "prospectiveEpoch": "2026-07-21",
@@ -14,9 +14,9 @@
       "accuracy": 0.972703410281704
     },
     "prospective": {
-      "evaluated": 31887,
-      "correct": 31065,
-      "accuracy": 0.9742214695643993
+      "evaluated": 33457,
+      "correct": 32602,
+      "accuracy": 0.9744448097558059
     }
   }
 }
