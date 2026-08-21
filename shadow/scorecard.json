@@ -1,5 +1,5 @@
 {
-  "asOf": "2026-08-20",
+  "asOf": "2026-08-21",
   "frozenAt": "2026-07-21",
   "freezeCutoff": "2025-01-01",
   "prospectiveEpoch": "2026-07-21",
@@ -9,14 +9,14 @@
   "fixedCount": 125,
   "tiers": {
     "heldOut": {
-      "evaluated": 585934,
-      "correct": 569939,
-      "accuracy": 0.9727017036048429
+      "evaluated": 585935,
+      "correct": 569938,
+      "accuracy": 0.9726983368462372
     },
     "prospective": {
-      "evaluated": 34946,
-      "correct": 34054,
-      "accuracy": 0.9744749041378126
+      "evaluated": 36482,
+      "correct": 35552,
+      "accuracy": 0.9745079765363741
     }
   }
 }
